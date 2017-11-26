@@ -1,0 +1,119 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Modeltech_pe_edu_10.4a/examples
+vmux
+Z0 !s110 1511715629
+!i10b 1
+!s100 O2Z1em7kQ0l1D>BNJIcG@1
+IkMkz];S_eUL@X]zzlA9j01
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dE:/Projects/Verilog
+Z3 w1511715620
+Z4 8E:/Projects/Verilog/testing.v
+Z5 FE:/Projects/Verilog/testing.v
+L0 165
+Z6 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z7 !s108 1511715629.000000
+Z8 !s107 E:/Projects/Verilog/testing.v|
+Z9 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/testing.v|
+!s101 -O0
+!i113 1
+Z10 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+vMuxTestBench
+R0
+!i10b 1
+!s100 ozjFTPPPBVE^I9?BzJP071
+IzZ]4[K^@N5cJh;FLWWdFe0
+R1
+R2
+R3
+R4
+R5
+L0 178
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+n@mux@test@bench
+vOurALU
+R0
+!i10b 1
+!s100 ;_1^XH^IhgNKSYB7IEX;a1
+In;AJbz_9c5>;^U3DPh0EO3
+R1
+R2
+R3
+R4
+R5
+L0 200
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+n@our@a@l@u
+vproject1TestBench
+R0
+!i10b 1
+!s100 SKGGe:V`6>m3=cYQd][=Z1
+I]hCzcll0OfjWTeHcMe0Kc0
+R1
+R2
+R3
+R4
+R5
+L0 38
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+nproject1@test@bench
+vRegisterFile
+R0
+!i10b 1
+!s100 PF914HJRL0L5:@e9Qa@9T1
+I5`lUP01@70hFW`;b;bICC0
+R1
+R2
+R3
+R4
+R5
+L0 2
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+n@register@file

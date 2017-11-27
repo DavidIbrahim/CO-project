@@ -1,1 +1,27 @@
+E:/Projects/Verilog/testing.v {1 {vlog -work work -stats=none E:/Projects/Verilog/testing.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module RegisterFile
+-- Compiling module project1TestBench
+-- Compiling module Mux_32bit
+-- Compiling module MuxTestBench
+-- Compiling module OurALU
 
+Top level modules:
+	project1TestBench
+	Mux_32bit
+	MuxTestBench
+
+} {} {}} E:/Projects/Verilog/memory.v {1 {vlog -work work -stats=none E:/Projects/Verilog/memory.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module InstMem
+-- Compiling module DataMem
+-- Compiling module ClkGen
+-- Compiling module Mux_5bits
+
+Top level modules:
+	InstMem
+	DataMem
+	ClkGen
+	Mux_5bits
+
+} {} {}}

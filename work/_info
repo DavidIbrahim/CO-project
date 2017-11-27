@@ -8,38 +8,61 @@ z2
 !i10f 100
 cModel Technology
 dC:/Modeltech_pe_edu_10.4a/examples
-vmux
-Z0 !s110 1511715629
+vClkGen
+Z0 !s110 1511808485
 !i10b 1
-!s100 O2Z1em7kQ0l1D>BNJIcG@1
-IkMkz];S_eUL@X]zzlA9j01
+!s100 SMXSR5]^BjY4W1nWglBKW2
+I:M_hdOHlU5_ENRf<1gS_^1
 Z1 VDg1SIo80bB@j0V0VzS_@n1
 Z2 dE:/Projects/Verilog
-Z3 w1511715620
-Z4 8E:/Projects/Verilog/testing.v
-Z5 FE:/Projects/Verilog/testing.v
-L0 165
+Z3 w1511802822
+Z4 8E:/Projects/Verilog/memory.v
+Z5 FE:/Projects/Verilog/memory.v
+L0 49
 Z6 OP;L;10.4a;61
 r1
 !s85 0
 31
-Z7 !s108 1511715629.000000
-Z8 !s107 E:/Projects/Verilog/testing.v|
-Z9 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/testing.v|
+Z7 !s108 1511808485.000000
+Z8 !s107 E:/Projects/Verilog/memory.v|
+Z9 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/memory.v|
 !s101 -O0
 !i113 1
 Z10 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
-vMuxTestBench
+n@clk@gen
+vCPU
+Z11 !s110 1511808484
+!i10b 1
+!s100 hOM?cgW<Eabmm31o92SG=2
+IQ[C0]W7D4SABRP@ZA:VFL2
+R1
+R2
+w1511808482
+8E:\Projects\Verilog\Processor.v
+FE:\Projects\Verilog\Processor.v
+L0 1
+R6
+r1
+!s85 0
+31
+Z12 !s108 1511808484.000000
+!s107 E:\Projects\Verilog\Processor.v|
+!s90 -reportprogress|300|-work|work|-stats=none|E:\Projects\Verilog\Processor.v|
+!s101 -O0
+!i113 1
+R10
+n@c@p@u
+vDataMem
 R0
 !i10b 1
-!s100 ozjFTPPPBVE^I9?BzJP071
-IzZ]4[K^@N5cJh;FLWWdFe0
+!s100 3MVeQ`6DVY5=VL_>U=3E61
+I]d@0VLCkcMWGahD^:P?3A0
 R1
 R2
 R3
 R4
 R5
-L0 178
+L0 23
 R6
 r1
 !s85 0
@@ -47,72 +70,266 @@ r1
 R7
 R8
 R9
+!s101 -O0
+!i113 1
+R10
+n@data@mem
+vInstMem
+R0
+!i10b 1
+!s100 IC8=j5FFVcCDz^fWJHGHT0
+IJ;N3ZmoKfaLO];AB>M`<k2
+R1
+R2
+R3
+R4
+R5
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+n@inst@mem
+vmux
+!s110 1511795595
+!i10b 1
+!s100 :f2dC^IUoXQQ0id<V7>bC3
+IWDGFaA];=G7Ab>4QW4OZZ1
+R1
+R2
+w1511792551
+Z13 8E:/Projects/Verilog/testing.v
+Z14 FE:/Projects/Verilog/testing.v
+Z15 L0 167
+R6
+r1
+!s85 0
+31
+!s108 1511795595.000000
+Z16 !s107 E:/Projects/Verilog/testing.v|
+Z17 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/testing.v|
+!s101 -O0
+!i113 1
+R10
+vmux_32bit
+!s110 1511802826
+!i10b 1
+!s100 PTl:_G3D8m?6]h^TnkR[[0
+Im@?_dOHT>ZlfCmig>4HSP0
+R1
+R2
+w1511802701
+R13
+R14
+R15
+R6
+r1
+!s85 0
+31
+!s108 1511802826.000000
+R16
+R17
+!s101 -O0
+!i113 1
+R10
+vMux_32bit
+R11
+!i10b 1
+!s100 @JOkPD?KGlVF7d>=S3a[n2
+IdLPF<N<Z1[4^n>@FLED[S0
+R1
+R2
+Z18 w1511802840
+R13
+R14
+R15
+R6
+r1
+!s85 0
+31
+R12
+R16
+R17
+!s101 -O0
+!i113 1
+R10
+n@mux_32bit
+vMux_32bits
+!s110 1511802751
+!i10b 1
+!s100 @]IoDLCeVOZSlD98YUbz23
+IlN@Hi2A<64RM:hi>YdBRM0
+R1
+R2
+w1511802749
+R4
+R5
+Z19 L0 66
+R6
+r1
+!s85 0
+31
+!s108 1511802751.000000
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+n@mux_32bits
+vmux_4bits
+!s110 1511794851
+!i10b 1
+!s100 a;l:foa3;AEbzb[oROZ2N2
+IYMfUR[P@;2RP?obBIbH7J0
+R1
+R2
+w1511792630
+R4
+R5
+R19
+R6
+r1
+!s85 0
+31
+!s108 1511794851.000000
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+vMux_5bits
+R0
+!i10b 1
+!s100 QFl<T2g`iKUdCV;eg1iiF0
+IUi`X[KLB`fhV<_H2bcg9?0
+R1
+R2
+R3
+R4
+R5
+R19
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+n@mux_5bits
+vmux_5bits
+!s110 1511802705
+!i10b 1
+!s100 m6d9@VEbn5gTNah1mEnGR2
+IzEinC5Y;;5DUh220_S37:3
+R1
+R2
+w1511795591
+R4
+R5
+R19
+R6
+r1
+!s85 0
+31
+!s108 1511802705.000000
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+vMuxTestBench
+R11
+!i10b 1
+!s100 ?[PA8FPYQd]eJGMd:mb8O0
+ILaM8Ufglh2gjcN;BTnJk]2
+R1
+R2
+R18
+R13
+R14
+L0 180
+R6
+r1
+!s85 0
+31
+R12
+R16
+R17
 !s101 -O0
 !i113 1
 R10
 n@mux@test@bench
 vOurALU
-R0
+R11
 !i10b 1
-!s100 ;_1^XH^IhgNKSYB7IEX;a1
-In;AJbz_9c5>;^U3DPh0EO3
+!s100 eHKdGea>JJX0VD=:0Ain10
+IEHzG;m2:Jo@cZQ;QF]`Za3
 R1
 R2
-R3
-R4
-R5
-L0 200
+R18
+R13
+R14
+L0 202
 R6
 r1
 !s85 0
 31
-R7
-R8
-R9
+R12
+R16
+R17
 !s101 -O0
 !i113 1
 R10
 n@our@a@l@u
 vproject1TestBench
-R0
+R11
 !i10b 1
-!s100 SKGGe:V`6>m3=cYQd][=Z1
-I]hCzcll0OfjWTeHcMe0Kc0
+!s100 @_deGY5Mi;IPO^`7JUQG50
+IbZ7U>OMRWAJfZG<RdgCHe0
 R1
 R2
-R3
-R4
-R5
+R18
+R13
+R14
 L0 38
 R6
 r1
 !s85 0
 31
-R7
-R8
-R9
+R12
+R16
+R17
 !s101 -O0
 !i113 1
 R10
 nproject1@test@bench
 vRegisterFile
-R0
+R11
 !i10b 1
 !s100 PF914HJRL0L5:@e9Qa@9T1
 I5`lUP01@70hFW`;b;bICC0
 R1
 R2
-R3
-R4
-R5
+R18
+R13
+R14
 L0 2
 R6
 r1
 !s85 0
 31
-R7
-R8
-R9
+R12
+R16
+R17
 !s101 -O0
 !i113 1
 R10

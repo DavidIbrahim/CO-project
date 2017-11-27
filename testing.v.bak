@@ -51,7 +51,8 @@ initial
 begin
 $monitor($time ,, " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d",Clk,Out1,Out2,ALUResult,DataToWrite);
 
-#5       //put 2 in register 0 and read data from reg (0&1) 
+$display("       //put -2 in register 0 and read data from reg (0&1) ");
+#5
 Mux_Ctrl=0;
 
 Clk = 0;
@@ -197,10 +198,11 @@ end
  mux a ( in1 , in2 , sel , out);
 
 endmodule
-module OurALU (Result,Overflow,A,B,Op,ShiftCount);
- 
+
+module OurALU (Result,zeroDetection,A,B,Op,ShiftCount);
+output reg zeroDetection;
 output reg [31:0] Result;
-output reg Overflow;
+reg Overflow;
 input signed[31:0] A;
 input signed[31:0] B;
 input [3:0] Op;
@@ -281,6 +283,9 @@ if(Op == 4'b0111)
 if(Op == 4'b1000)
   if(A<B) Result = 1; 
 	else Result = 0;
+if(A-B == 0)
+	zeroDetection <= 1;
+else zeroDetection <=0;
 end 
  
 endmodule

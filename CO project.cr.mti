@@ -1,15 +1,9 @@
-E:/Projects/Verilog/testing.v {1 {vlog -work work -stats=none E:/Projects/Verilog/testing.v
+E:/Projects/Verilog/Processor.v {1 {vlog -work work -stats=none {E:\Projects\Verilog\Processor.v}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module RegisterFile
--- Compiling module project1TestBench
--- Compiling module Mux_32bit
--- Compiling module MuxTestBench
--- Compiling module OurALU
+-- Compiling module CPU
 
 Top level modules:
-	project1TestBench
-	Mux_32bit
-	MuxTestBench
+	CPU
 
 } {} {}} E:/Projects/Verilog/memory.v {1 {vlog -work work -stats=none E:/Projects/Verilog/memory.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015

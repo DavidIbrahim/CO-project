@@ -38,14 +38,14 @@ endmodule
 module project1TestBench();
 reg [4:0] RR1 , RR2 ;  // the address of the registers to read
 reg [4:0] WR; // the address of the registers to write
-reg[4:0]ShiftCount;
+reg [4:0]ShiftCount;
 reg [31:0] WD;   // data to write
 reg WE;    		//write enable
 reg Clk; 
 reg Mux_Ctrl;		
 wire signed [31:0] Out1 , Out2 ; 
 wire signed [31:0] ALUResult;
-wire signed [31:0]DataToWrite;
+wire signed [31:0] DataToWrite;
 reg [0:4]op;
  OurALU z(ALUResult,overflow,Out1,Out2,op,ShiftCount);
 mux a (WD,ALUResult,Mux_Ctrl,DataToWrite);
@@ -199,6 +199,7 @@ end
  mux a ( in1 , in2 , sel , out);
 
 endmodule
+
 module OurALU (Result,zeroDetection,A,B,Op,ShiftCount);
 output reg zeroDetection;
 output reg [31:0] Result;

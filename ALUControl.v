@@ -22,6 +22,7 @@ if(funct == 32) Op <= 4'b0010; //add
 if(funct == 34) Op <= 4'b0110; //sub
 if(funct == 42) Op <= 4'b0111; //slt
 if(funct == 39) Op <= 4'b1100; //nor
+if(funct == 0 ) Op <= 4'b1110; //sll
 
 end //endif
 end //always
@@ -36,7 +37,7 @@ wire [3:0] Op;
 
 initial
 begin
-$monitor($time ,, "ALUop: %b	funct: %d	Op:%b", ALUOp, funct, Op);
+$monitor($time ,, "ALUop: %b	funct: %d	ShiftCount: %d	Op:%b", ALUOp, funct, ShiftCount, Op);
 
 $display("lw-->add");
 ALUOp= 2'b00;
@@ -74,6 +75,11 @@ funct= 39;
 $display("funct--slt");
 ALUOp= 2'b10;
 funct= 42;
+
+#5
+$display("funct--sll");
+ALUOp= 2'b10;
+funct= 0;
 
 end// end initial
 

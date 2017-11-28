@@ -1,8 +1,9 @@
-module ALUControl (Op, ALUOp, funct);
+module ALUControl (Op, ALUOp, funct, ShiftCount);
 
 output reg [3:0] Op;
 input [1:0] ALUOp;
 input [5:0] funct;
+input [4:0] ShiftCount;
 
 always@ (ALUOp or funct)
 begin
@@ -22,6 +23,7 @@ if(funct == 32) Op <= 4'b0010; //add
 if(funct == 34) Op <= 4'b0110; //sub
 if(funct == 42) Op <= 4'b0111; //slt
 if(funct == 39) Op <= 4'b1100; //nor
+if(funct == 0 ) Op <= 4'b1110; //sll
 
 end //endif
 end //always
@@ -32,13 +34,13 @@ endmodule
 module ALUControlTB;
 reg [1:0] ALUOp;
 reg [5:0] funct;
+reg [4:0] ShiftCount;
 wire [3:0] Op;
 
 initial
 begin
-$monitor($time ,, "ALUop: %b	funct: %d	Op:%b", ALUOp, funct, Op);
+$monitor($time ,, "ALUop: %b	funct: %d	ShiftCount: %d	Op:%b", ALUOp, funct, ShiftCount, Op);
 
-#5
 $display("lw-->add");
 ALUOp= 2'b00;
 
@@ -50,16 +52,19 @@ ALUOp= 2'b01;
 $display("funct--add");
 ALUOp= 2'b10;
 funct= 32;
+ShiftCount= 0;
 
 #5
 $display("funct--sub");
 ALUOp= 2'b10;
 funct= 34;
+ShiftCount= 0;
 
 #5
 $display("funct--and");
 ALUOp= 2'b10;
 funct= 36;
+ShiftCount= 0;
 
 #5
 $display("funct--or");
@@ -70,14 +75,22 @@ funct= 37;
 $display("funct--nor");
 ALUOp= 2'b10;
 funct= 39;
+ShiftCount= 0;
 
 #5
 $display("funct--slt");
 ALUOp= 2'b10;
 funct= 42;
+ShiftCount= 0;
+
+#5
+$display("funct--sll");
+ALUOp= 2'b10;
+funct= 0;
+ShiftCount= 5;
 
 end// end initial
 
-ALUControl F(Op, ALUOp, funct);
+ALUControl F(Op, ALUOp, funct, ShiftCount);
 
 endmodule

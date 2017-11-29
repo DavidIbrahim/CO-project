@@ -47,9 +47,14 @@ wire signed [31:0] Out1 , Out2 ;
 wire signed [31:0] ALUResult;
 wire signed [31:0] DataToWrite;
 reg [0:4]op;
+
+OurALU z(ALUResult,overflow,Out1,Out2,op,ShiftCount);
+Mux_32bits a (WD,ALUResult,Mux_Ctrl,DataToWrite);
+RegisterFile s(RR1,RR2,WR,DataToWrite,WE,Clk,Out1,Out2);
+
 initial
 begin
-$monitor($time ,, " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d",Clk,Out1,Out2,ALUResult,DataToWrite);
+$monitor($time ,, " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d Zero : %d",Clk,Out1,Out2,ALUResult,DataToWrite,overflow);
 
 $display("       //put -2 in register 0 and read data from reg (0&1) ");
 #5
@@ -69,7 +74,7 @@ op=4'b0010;
 RR1 = 0;
 RR2 = 1;
 WR=1;
-WD =1200;
+WD =-2;
 WE =1 ;
 
 #5 // put 1300 in register 31 and readData from register (0 and 31) and add
@@ -179,15 +184,13 @@ begin
 #2 Clk = ~Clk;
 end
 
-OurALU z(ALUResult,overflow,Out1,Out2,op,ShiftCount);
-mux a (WD,ALUResult,Mux_Ctrl,DataToWrite);
-RegisterFile s(RR1,RR2,WR,DataToWrite,WE,Clk,Out1,Out2);
-
 endmodule
 
 
 
-module mux_32bits ( in1 , in2 , sel , out);
+
+module Mux_32bits ( in1 , in2 , sel , out);
+
 input [31:0] in1,in2;
 input sel;
 output reg [31:0] out ;
@@ -219,7 +222,7 @@ in2  = 11;
 sel = 1'b1;
  
 end
- mux_32bits a ( in1 , in2 , sel , out);
+Mux_32bits a ( in1 , in2 , sel , out);
 
 endmodule
 
@@ -320,6 +323,7 @@ if(A-B == 0)
 	zeroDetection <= 1;
 else zeroDetection <=0;
 end 
+
 
 endmodule
 

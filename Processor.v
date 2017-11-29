@@ -1,5 +1,4 @@
-module CPU (clk,instruction) ;
-input signed[31:0] instruction;
+module CPU (clk) ;
 input clk;
 parameter LW = 6'b100011, SW = 6'b101011, BEQ = 6'b000100, ALUop = 6'b000000; //for checking op code
 wire [31:0] Ain, Bin; //Input to the main ALU 
@@ -22,11 +21,11 @@ wire [4:0] rs, rt,rd,shamt ; // Access Instruction fields fields
 wire [5:0]funct,opCode;	     // Access Instruction fields fields 
 wire [15:0]immediate_address;// Access Instruction fields fields 
 wire [31:0]readData2;     // output of fileregister and input to the second mux
-wire[31:0] instruction2; // output of Instrection memory
+wire[31:0] instruction; // output of Instrection memory
 wire[31:0]extended_immediate; // output of signExtension 
 wire[31:0]extended_shiftedBy2; // output of signExtender after being shifted by 2 , used in beq
 
-InstMem  IMemory(PC,clk,instruction2);
+InstMem  IMemory(PC,clk,instruction);
 
 Mux_5bits firstMux( rt , rd , regDst , writeRegister);  // mux before registerFile
 	
@@ -44,6 +43,7 @@ OurALU mainAlu(ALUResult,zeroDetection,Ain,Bin,operation,shamt); // main alu
 
 AndGate_1bit branchAnd( selectorOfBranchMux , branch , zeroDetection);
 
+
 Mux_32bits thirdMux(proceedingPC,nextPC_branch,selectorOfBranchMux,nextPC);	 // mux before ALU
 
 DataMem DMemory( ALUResult ,readData2 ,memRead , memWrite  ,clk , readDataMemory ); //Data Memory
@@ -51,7 +51,7 @@ DataMem DMemory( ALUResult ,readData2 ,memRead , memWrite  ,clk , readDataMemory
 Mux_32bits fourthMux(ALUResult,readDataMemory , memToReg, writeData);// mux before WriteData in reg
 
 // These assignments defines fields from the instruction
-assign op = instruction [31:26];
+assign opCode = instruction [31:26];
 assign rs = instruction[25:21];
 assign rt = instruction [20:16];
 assign rd = instruction [15:11];
@@ -66,10 +66,11 @@ begin
 PC = 0;
 
 end
+
 always @(posedge clk)
 begin
-PC <= nextPC
-
+PC <= nextPC;
 end
+
 
 endmodule

@@ -47,9 +47,11 @@ wire signed [31:0] Out1 , Out2 ;
 wire signed [31:0] ALUResult;
 wire signed [31:0] DataToWrite;
 reg [0:4]op;
- OurALU z(ALUResult,overflow,Out1,Out2,op,ShiftCount);
-mux a (WD,ALUResult,Mux_Ctrl,DataToWrite);
+
+OurALU z(ALUResult,overflow,Out1,Out2,op,ShiftCount);
+Mux_32bits a (WD,ALUResult,Mux_Ctrl,DataToWrite);
 RegisterFile s(RR1,RR2,WR,DataToWrite,WE,Clk,Out1,Out2);
+
 initial
 begin
 $monitor($time ,, " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d Zero : %d",Clk,Out1,Out2,ALUResult,DataToWrite,overflow);
@@ -64,10 +66,11 @@ RR2 = 1;
 WR=0;
 WD =-2;
 WE =1 ;
+
 #4       // put 1200 in register 1 and read data from reg (0&1) and add reg 0 and 1
 Mux_Ctrl = 0;
 
-op=4'b0000;
+op=4'b0010;
 RR1 = 0;
 RR2 = 1;
 WR=1;
@@ -76,79 +79,102 @@ WE =1 ;
 
 #5 // put 1300 in register 31 and readData from register (0 and 31) and add
 Mux_Ctrl =0;
- 
+op=4'b0010;
 RR1 = 0;
 RR2 = 31;
 WR=31;
 WD =1300;
 WE =1 ;
+
 #5  // put -2000 in register 3  and read data from (3 and 31) and add
 Mux_Ctrl =0 ;
 RR1 = 3;
 $display("add");
+op=4'b0010;
 RR2 = 31;
 WR=3;
 WD =-2000;
 WE =1 ;
-#5  //  read data from (3 and 0) and sub and write the result (-2002) in reg 5
+
+#5  //  read data from (3 and 0) and sub and write the result (-2000) in reg 5
 Mux_Ctrl =1 ;
 RR1 = 3;
 RR2 = 0;
 $display("sub");
-op=4'b0001;
+op=4'b0110;
 WR=5;
 WD =-2000;
 WE =1 ;
-#5  //  read data from (0 and 5) and sub and make and between them
+
+#5  //  read data from (0 and 5) and make AND between them
 Mux_Ctrl =1 ;
 RR1 = 0;
 RR2 = 5;
 $display("AND");
-op=4'b0010;
+op=4'b0000;
 WR=5;
 WD =-2000;
 WE =0 ;
-#5  //  read data from (0 and 5) and sub and make or between them
+
+#5  //  read data from (0 and 5) and make OR
 Mux_Ctrl =1 ;
 RR1 = 0;
 RR2 = 5;
 $display("OR");
-op=4'b0011;
+op=4'b0001;
 WR=5;
 WD =-2000;
 WE =0 ;
-#5  //  read data from (0 and 31) and sub and SLL reg 0 by two
+
+#5  //  read data from (0 and 31) and SLL reg 0 by two
 Mux_Ctrl =1 ;
 RR1 = 0;
 RR2 = 31;
-op=4'b0100;
+op=4'b1110;
 $display("SLL by two");
 WR=5;
 WD =-2000;
 WE =0 ;
 ShiftCount = 5'b00010;
-#5  //  read data from (0 and 31) a and SLA reg 0 by two
+
+#5  //  read data from (0 and 31) and SRA reg 0 by two
 Mux_Ctrl =1 ;
 RR1 = 0;
 RR2 = 31;
-$display("SLA");
+$display("SRA");
 
-op=4'b0110;
+op=4'b1111;
 WR=5;
 WD =-2000;
 WE =0 ;
 ShiftCount = 5'b00010;
-#5  //  read data from (0 and 31) and sub and make greater than
+
+#5  //  read data from (0 and 31) and make greater than
 Mux_Ctrl =1 ;
 RR1 = 0;
 RR2 = 31;
-op=4'b0111;
+op=4'b1000;
 WR=5;
 WD =-2000;
 WE =0 ;
+
 $display("greater than");
 
 ShiftCount = 5'b00010;
+
+#5  //  read data from (0 and 31) and make nor
+Mux_Ctrl =1 ;
+RR1 = 0;
+RR2 = 31;
+op=4'b1100;
+WR=5;
+WD =-2000;
+WE =0 ;
+
+$display("Nor");
+
+ShiftCount = 5'b00000;
+
 end
 
 
@@ -158,13 +184,13 @@ begin
 #2 Clk = ~Clk;
 end
 
-
-
 endmodule
 
 
 
-module Mux_32bit ( in1 , in2 , sel , out);
+
+module Mux_32bits ( in1 , in2 , sel , out);
+
 input [31:0] in1,in2;
 input sel;
 output reg [31:0] out ;
@@ -196,7 +222,7 @@ in2  = 11;
 sel = 1'b1;
  
 end
- mux a ( in1 , in2 , sel , out);
+Mux_32bits a ( in1 , in2 , sel , out);
 
 endmodule
 
@@ -211,10 +237,10 @@ input [4:0] ShiftCount;
 wire [31:0] B_neg;
 assign B_neg = - B;
  
-//Addition op 0
+//Addition op 2
 always @(A or B or Op)
 begin
-if(Op == 4'b0000)
+if(Op == 4'b0010)
 begin
 
 Result <= (A+B);
@@ -224,8 +250,8 @@ else Overflow <=0;
 
 end
 
-//Subtraction op 1
-if(Op == 4'b0001)
+//Subtraction op 6
+if(Op == 4'b0110)
 begin
 
 Result <= (A-B);
@@ -235,8 +261,8 @@ else Overflow <=0;
 
 end
 
-//And op 2
-if(Op == 4'b0010)
+//And op 0
+if(Op == 4'b0000)
 begin
 
 Result <= (A&B);
@@ -244,8 +270,8 @@ Overflow <=0;
 
 end
 
-//Or op 3
-if(Op == 4'b0011)
+//Or op 1
+if(Op == 4'b0001)
 begin
 
 Result <= (A|B);
@@ -253,22 +279,31 @@ Overflow <=0;
 
 end
 
-//Shift left logical op 4
-if(Op == 4'b0100)
+//Nor op 12
+if(Op == 4'b1100)
+begin
+
+Result <= ~(A|B);
+Overflow <=0;
+
+end
+
+//Shift left logical op 14
+if(Op == 4'b1110)
 begin
 Result <= (A<<ShiftCount);
 Overflow <= 0;
 end
 
-//Shift right logical op 5
-if(Op == 4'b0101)
+//Shift right logical op 15
+if(Op == 4'b1101)
 begin
 Result <= (A>>ShiftCount);
 Overflow <= 0;
 end
 
-//Shift right arithmetic op 6
-if(Op == 4'b0110)
+//Shift right arithmetic op 13
+if(Op == 4'b1111)
 begin
 Result <= (A>>>ShiftCount);
 if(A[31]==~Result[31])
@@ -276,19 +311,19 @@ Overflow <= 1;
 else Overflow <= 0;
 end
 
-//Greater than Op 7
-if(Op == 4'b0111)
+//Greater than Op 8
+if(Op == 4'b1000)
   if(A>B) Result = 1; 
 	else Result = 0;
-//smaller than Op 8
-if(Op == 4'b1000)
+//smaller than Op 7 (slt)
+if(Op == 4'b0111)
   if(A<B) Result = 1; 
 	else Result = 0;
 if(A-B == 0)
 	zeroDetection <= 1;
 else zeroDetection <=0;
 end 
- 
-endmodule
 
+
+endmodule
 

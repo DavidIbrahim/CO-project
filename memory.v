@@ -1,3 +1,4 @@
+
 module InstMem(Pc,Clk,InstReg);
 
 input [31:0] Pc ;  // program counter to identify which inst
@@ -5,12 +6,22 @@ input  Clk; // same for all of the program
 
 output reg [31:0] InstReg ; //  the inst that coincides with that pc number 
 
-reg[31:0]IMemory[0:1023]; //  the memory reg.s .
-
+reg [31:0]IMemory[0:1023]; //  the memory reg.s .
+initial
+		begin	
+			integer i;
+			for(i=0;i<1024;i=i+1)
+				begin
+					IMemory[i]=0;
+				end									 
+		$readmemb("instructionMemory.txt",IMemory);	
+end					
 
 always @(posedge Clk)
 begin
-	
+	//$display("k %b",IMemory[0]);
+	$display("k %b",Pc);	
+	//$display("k %b",Clk);	
 	InstReg <= IMemory[Pc>>2]; // as pc points to a bit so divide by 4 to point to a word 
         
 end
@@ -32,12 +43,28 @@ output reg [31:0] ReadData ; // data to be read from memory.
 
 reg[31:0]DMemory[0:1023]; // the memory reg.s .
 
+initial
+		begin	
+			integer i;
+			for(i=0;i<1024;i=i+1)
+				begin
+					DMemory[i]=0;
+				end		
+				$display("%b",DMemory[1]);
+		$readmemb("DataMemory.txt",DMemory);		
+		$display("%b",DMemory[1]);
+end	
 always @(posedge Clk )
-begin
+begin			 
+	$display("it is a posedge");
 if (MemWrite)
 	DMemory[Address>>2] <= writeData ;  
-else 
-	ReadData <= DMemory[Address>>2] ; 
+else   
+	begin						
+		$display("mem Write=0,address=%b",Address>>2);
+	ReadData <= DMemory[Address>>2] ; 	
+	$display("ReadData=%b",ReadData);
+	end
 
 end
 
@@ -77,15 +104,3 @@ end
 endmodule
 
 
-module AndGate_1bit ( o1 , in1 , in2 );
-
-
-output o1 ;
-input in1 ,in2 ;
-	
-assign o1 = in1 & in2 ;
-
-
-
-
-end module

@@ -7,9 +7,10 @@ input  Clk; // same for all of the program
 output reg [31:0] InstReg ; //  the inst that coincides with that pc number 
 
 reg [31:0]IMemory[0:1023]; //  the memory reg.s .
+integer i;
 initial
 		begin	
-			integer i;
+			
 			for(i=0;i<1024;i=i+1)
 				begin
 					IMemory[i]=0;
@@ -42,10 +43,11 @@ input Clk; 	  // all compennts must have same clk 	.
 output reg [31:0] ReadData ; // data to be read from memory.
 
 reg[31:0]DMemory[0:1023]; // the memory reg.s .
+integer i;
 
 initial
 		begin	
-			integer i;
+			
 			for(i=0;i<1024;i=i+1)
 				begin
 					DMemory[i]=0;

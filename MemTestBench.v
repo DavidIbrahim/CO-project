@@ -14,9 +14,10 @@ module InstMemTestBench;
 					#5
 					Clk=~Clk;
 				end		 		 */
+	integer i;
 	initial
 		begin	
-			integer i;
+			
 			for(i=0;i<1024;i=i+1)
 				begin
 					IMemory[i]=0;
@@ -43,7 +44,7 @@ module DataMemTestBench;
 	
 	reg[31:0] Address=8   ; // the address to read or write  in . 
 reg [31:0] writeData=0 ; // the data to be writen in that address . 
-reg  MemWrite=1; ; // write enable . 
+reg  MemWrite=1; // write enable . 
 reg  MemRead=0  ; // read  enable .
 reg Clk=0; 	  // all compennts must have same clk 	.
 

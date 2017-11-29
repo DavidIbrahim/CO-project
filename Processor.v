@@ -1,5 +1,4 @@
-module CPU (clk,instruction) ;
-input signed[31:0] instruction;
+module CPU (clk) ;
 input clk;
 parameter LW = 6'b100011, SW = 6'b101011, BEQ = 6'b000100, ALUop = 6'b000000; //for checking op code
 wire [31:0] Ain, Bin; //Input to the main ALU 
@@ -42,7 +41,7 @@ OurALU mainAlu(ALUResult,zeroDetection,Ain,Bin,operation,shamt); // main alu
 
 AndGate_1bit branchAnd( selectorOfBranchMux , branch , zeroDetection);
 
-Mux_32bits thirdMux(proceedingPC,nextPC_branch,selectorOfBranchMux,nextPc);	 // mux before ALU
+	Mux_32bits thirdMux(proceedingPC,nextPC_branch,selectorOfBranchMux,nextPC);	 // mux before PC
 
 // These assignments defines fields from the instruction
 assign op = instruction [31:26];
@@ -60,5 +59,10 @@ begin
 PC = 0;
 
 end
+	always@(posedge)
+		begin
+		PC<= nextPC	
+			
+		end
 
 endmodule

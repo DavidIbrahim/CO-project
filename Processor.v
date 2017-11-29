@@ -3,7 +3,8 @@ input signed[31:0] instruction;
 input clk;
 parameter LW = 6'b100011, SW = 6'b101011, BEQ = 6'b000100, ALUop = 6'b000000; //for checking op code
 wire [31:0] Ain, Bin; //Input to the main ALU 
-reg[31:0] PC, DMemory[0:1023]; //Memory
+reg[31:0] PC; //Memory
+wire[31:0] readDataMemory ; // output of dataMemory
 wire [31:0] proceedingPC ; //  =pc+4
 wire[31:0] nextPC ; // output of third mux chooses between proceedingPC(PC+4) and branch address
 
@@ -24,11 +25,12 @@ wire [31:0]readData2;     // output of fileregister and input to the second mux
 wire[31:0] instruction2; // output of Instrection memory
 wire[31:0]extended_immediate; // output of signExtension 
 wire[31:0]extended_shiftedBy2; // output of signExtender after being shifted by 2 , used in beq
+
 InstMem  IMemory(PC,clk,instruction2);
 
 Mux_5bits firstMux( rt , rd , regDst , writeRegister);  // mux before registerFile
 	
-RegisterFile registerFile(rs,rt,writeRegister,writeData,regWrite,Clk,Ain,readData2);
+RegisterFile registerFile(rs,rt,writeRegister,writeData,regWrite,clk,Ain,readData2);
 
 SignExtender signExtend(immediate_address ,extended_immediate);
 
@@ -42,7 +44,11 @@ OurALU mainAlu(ALUResult,zeroDetection,Ain,Bin,operation,shamt); // main alu
 
 AndGate_1bit branchAnd( selectorOfBranchMux , branch , zeroDetection);
 
-Mux_32bits thirdMux(proceedingPC,nextPC_branch,selectorOfBranchMux,nextPc);	 // mux before ALU
+Mux_32bits thirdMux(proceedingPC,nextPC_branch,selectorOfBranchMux,nextPC);	 // mux before ALU
+
+DataMem DMemory( ALUResult ,readData2 ,memRead , memWrite  ,clk , readDataMemory ); //Data Memory
+
+Mux_32bits fourthMux(ALUResult,readDataMemory , memToReg, writeData);// mux before WriteData in reg
 
 // These assignments defines fields from the instruction
 assign op = instruction [31:26];
@@ -54,10 +60,15 @@ assign funct = instruction[5:0];
 assign immediate_address = instruction[15:0];	
 assign extended_shiftedBy2 = (extended_immediate<<2);
 assign proceedingPC = PC+4 ;
-assign nextPC_branch = nextPC + extended_shiftedBy2;
+assign nextPC_branch = proceedingPC + extended_shiftedBy2;
 initial
 begin
 PC = 0;
+
+end
+always @(posedge clk)
+begin
+PC <= nextPC
 
 end
 

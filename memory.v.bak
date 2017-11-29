@@ -63,7 +63,7 @@ end
 
 endmodule
 
-module Mux_32bits ( in1 , in2 , sel , out);
+module Mux_5bits ( in1 , in2 , sel , out);
 input [4:0] in1,in2;
 input sel;
 output reg [4:0] out ;

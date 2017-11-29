@@ -4,13 +4,16 @@ input clk;
 parameter LW = 6'b100011, SW = 6'b101011, BEQ = 6'b000100, ALUop = 6'b000000; //for checking op code
 wire [31:0] Ain, Bin; //Input to the main ALU 
 reg[31:0] PC, DMemory[0:1023]; //Memory
-wire[31:0] nextPC ;
+wire [31:0] proceedingPC ; //  =pc+4
+wire[31:0] nextPC ; // output of third mux chooses between proceedingPC(PC+4) and branch address
+
+wire[31:0] nextPC_branch; // this is is the new address of pc if the instruction is beq 
 wire signed [31:0] ALUResult;
 wire signed [31:0]writeData;
 wire [4:0] writeRegister; // the address of the registers to write output of the mux
 
 
-wire regWrite,regDst,aluSrc,memWrite,memToReg,memRead,branch;  
+wire regWrite,regDst,aluSrc,memWrite,memToReg,memRead,branch,zeroDetection,selectorOfBranchMux;  
 
 wire [3:0]operation;//input to mainAlu and output from Alucontrol
 
@@ -37,6 +40,10 @@ ALUControl aluControlUnit(operation, aluOp, funct);// alu control unit
 
 OurALU mainAlu(ALUResult,zeroDetection,Ain,Bin,operation,shamt); // main alu
 
+AndGate_1bit branchAnd( selectorOfBranchMux , branch , zeroDetection);
+
+Mux_32bits thirdMux(proceedingPC,nextPC_branch,selectorOfBranchMux,nextPc);	 // mux before ALU
+
 // These assignments defines fields from the instruction
 assign op = instruction [31:26];
 assign rs = instruction[25:21];
@@ -46,7 +53,8 @@ assign shamt = instruction[10:6];
 assign funct = instruction[5:0];
 assign immediate_address = instruction[15:0];	
 assign extended_shiftedBy2 = (extended_immediate<<2);
-assign nextPC = PC+4 ;
+assign proceedingPC = PC+4 ;
+assign nextPC_branch = nextPC + extended_shiftedBy2;
 initial
 begin
 PC = 0;

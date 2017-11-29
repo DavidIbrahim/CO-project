@@ -76,3 +76,16 @@ else out = in2 ;
 end
 endmodule
 
+
+module AndGate_1bit ( o1 , in1 , in2 );
+
+
+output o1 ;
+input in1 ,in2 ;
+	
+assign o1 = in1 & in2 ;
+
+
+
+
+end module

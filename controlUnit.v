@@ -3,7 +3,8 @@ module controlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,r
 	
 	input [5:0]opCode;
 	output reg regDst,branch,memRead,memToReg,memWrite,aluSrc,regWrite;	   
-	output reg [1:0]aluOp;	  
+	output reg [1:0]aluOp;	
+	
 	always@(opCode)
 		begin
 			if(opCode==0)//R-instruction
@@ -16,7 +17,7 @@ module controlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,r
 					memWrite <=0;
 					branch<=0;
 					aluOp<=10; 
-					$display("The instruction is R-instruction");
+					//$display("The instruction is R-instruction");
 				end	
 			else if(opCode==35)//lw
 				begin
@@ -28,7 +29,7 @@ module controlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,r
 					memWrite <=0;
 					branch<=0;
 					aluOp<=00;
-					$display("The instruction is load word");
+					//$display("The instruction is load word");
 				end	
 			else if(opCode==43)//sw
 				begin
@@ -40,7 +41,7 @@ module controlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,r
 					memWrite <=1;
 					branch<=0;
 					aluOp<=00;							  
-					$display("The instruction is store word");
+					//$display("The instruction is store word");
 				end	
 			else if(opCode==4)//beq
 				begin
@@ -52,7 +53,7 @@ module controlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,r
 					memWrite <=0;
 					branch<=1;
 					aluOp<=01;		   
-					$display("The instruction is beq");
+					//$display("The instruction is beq");
 				end		
 			else//not supported operation
 				begin
@@ -64,7 +65,7 @@ module controlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,r
 					memWrite <=0;
 					branch<=0;
 					aluOp<=00;						   
-					$display("The instruction is not supported %d",opCode);
+					//$display("The instruction is not supported ,opCode : %d",opCode);
 				end		
 				
 		end

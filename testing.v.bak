@@ -10,9 +10,16 @@ output reg signed [31:0] Out1 , Out2 ;  // output of reading register 1 and read
 
 reg signed [31:0] registers[31:0]; // an array of 32 registers each of 32 bits
 
+integer i;
 
+initial
+begin
 
-
+	for(i=0;i<32;i=i+1)
+		begin
+			registers[i]=0;
+		end				
+end
 
 always @(*)
  begin
@@ -227,7 +234,7 @@ Mux_32bits a ( in1 , in2 , sel , out);
 endmodule
 
 module OurALU (Result,zeroDetection,A,B,Op,ShiftCount);
-output reg zeroDetection;
+output wire zeroDetection;
 output reg [31:0] Result;
 reg Overflow;
 input signed[31:0] A;
@@ -236,7 +243,8 @@ input [3:0] Op;
 input [4:0] ShiftCount;
 wire [31:0] B_neg;
 assign B_neg = - B;
- 
+assign zeroDetection = (A==B);
+
 //Addition op 2
 always @(A or B or Op)
 begin
@@ -319,15 +327,13 @@ if(Op == 4'b1000)
 if(Op == 4'b0111)
   if(A<B) Result = 1; 
 	else Result = 0;
-if(A-B == 0)
-	zeroDetection <= 1;
-else zeroDetection <=0;
+
 end 
 
 
 endmodule
 
-module AndGate_1bit(in1,in2,out)
+module AndGate_1bit(in1,in2,out);
 output out;
 input in1,in2;	
 assign out = in1 & in2;

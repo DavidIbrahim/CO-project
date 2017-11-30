@@ -1,4 +1,4 @@
-E:/Projects/Verilog/testing.v {1 {vlog -work work -stats=none {E:\Projects\Verilog\testing.v}
+E:/Projects/Verilog/testing.v {1 {vlog -work work -stats=none E:/Projects/Verilog/testing.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module RegisterFile
 -- Compiling module project1TestBench
@@ -12,6 +12,14 @@ Top level modules:
 	MuxTestBench
 	AndGate_1bit
 
+} {} {}} E:/Projects/Verilog/ALUControl.v {1 {vlog -work work -stats=none E:/Projects/Verilog/ALUControl.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALUControl
+-- Compiling module ALUControlTB
+
+Top level modules:
+	ALUControlTB
+
 } {} {}} E:/Projects/Verilog/MemTestBench.v {1 {vlog -work work -stats=none E:/Projects/Verilog/MemTestBench.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module InstMemTestBench
@@ -21,13 +29,13 @@ Top level modules:
 	InstMemTestBench
 	DataMemTestBench
 
-} {} {}} E:/Projects/Verilog/ALUControl.v {1 {vlog -work work -stats=none E:/Projects/Verilog/ALUControl.v
+} {} {}} E:/Projects/Verilog/Processor.v {1 {vlog -work work -stats=none E:/Projects/Verilog/Processor.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module ALUControl
--- Compiling module ALUControlTB
+-- Compiling module CPU
+-- Compiling module cpuTestBench
 
 Top level modules:
-	ALUControlTB
+	cpuTestBench
 
 } {} {}} E:/Projects/Verilog/SignExtender.v {1 {vlog -work work -stats=none E:/Projects/Verilog/SignExtender.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
@@ -37,15 +45,7 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	SignExtenderTestBench
 
-} {} {}} E:/Projects/Verilog/controlUnit.v {1 {vlog -work work -stats=none E:/Projects/Verilog/controlUnit.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module controlUnit
--- Compiling module controlUnitTestBench
-
-Top level modules:
-	controlUnitTestBench
-
-} {} {}} E:/Projects/Verilog/memory.v {1 {vlog -work work -stats=none {E:\Projects\Verilog\memory.v}
+} {} {}} E:/Projects/Verilog/memory.v {1 {vlog -work work -stats=none E:/Projects/Verilog/memory.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module InstMem
 -- Compiling module DataMem
@@ -57,5 +57,13 @@ Top level modules:
 	DataMem
 	ClkGen
 	Mux_5bits
+
+} {} {}} E:/Projects/Verilog/controlUnit.v {1 {vlog -work work -stats=none E:/Projects/Verilog/controlUnit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module controlUnit
+-- Compiling module controlUnitTestBench
+
+Top level modules:
+	controlUnitTestBench
 
 } {} {}}

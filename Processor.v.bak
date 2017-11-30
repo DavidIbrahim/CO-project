@@ -6,12 +6,12 @@ reg[31:0] PC; //Memory
 wire[31:0] readDataMemory ; // output of dataMemory
 wire [31:0] proceedingPC ; //  =pc+4
 wire[31:0] nextPC ; // output of third mux chooses between proceedingPC(PC+4) and branch address
-
+//reg[31:0] nextPCReg;
 wire[31:0] nextPC_branch; // this is is the new address of pc if the instruction is beq 
 wire signed [31:0] ALUResult;
 wire signed [31:0]writeData;
 wire [4:0] writeRegister; // the address of the registers to write output of the mux
-wire [1:0] aluOp;
+wire [1:0] aluOP;
 
 wire regWrite,regDst,aluSrc,memWrite,memToReg,memRead,branch,zeroDetection,selectorOfBranchMux;  
 
@@ -39,9 +39,7 @@ Mux_32bits secondMux(readData2,extended_immediate,aluSrc,Bin);	 // mux before AL
 
 ALUControl aluControlUnit(operation, aluOp, funct);// alu control unit
 
-OurALU mainAlu(ALUResult,zeroDetection,Ain,Bin,operation,shamt); // main alu
-
-AndGate_1bit branchAnd( selectorOfBranchMux , branch , zeroDetection);
+OurALU mainAlu(ALUResult,xxxxx,Ain,Bin,operation,shamt); // main alu
 
 
 Mux_32bits thirdMux(proceedingPC,nextPC_branch,selectorOfBranchMux,nextPC);	 // mux before ALU
@@ -51,6 +49,7 @@ DataMem DMemory( ALUResult ,readData2 ,memRead , memWrite  ,clk , readDataMemory
 Mux_32bits fourthMux(ALUResult,readDataMemory , memToReg, writeData);// mux before WriteData in reg
 
 // These assignments defines fields from the instruction
+assign selectorOfBranchMux = branch & zeroDetection;
 assign opCode = instruction [31:26];
 assign rs = instruction[25:21];
 assign rt = instruction [20:16];
@@ -61,15 +60,23 @@ assign immediate_address = instruction[15:0];
 assign extended_shiftedBy2 = (extended_immediate<<2);
 assign proceedingPC = PC+4 ;
 assign nextPC_branch = proceedingPC + extended_shiftedBy2;
+assign zeroDetection = ((Ain-Bin)==0)?1:0; 
 initial
 begin
 PC = 0;
+//nextPCReg=0;
+$monitor($time,,"PC = %d , proceedingPC = %d, nextPC_branch = %d ,nextPC = %d , \n zeroDetec = %d,branch=%d ,rs=%d,rt=%d,Bin = %d Ain = %d instruction%d",
+PC,proceedingPC,nextPC_branch,nextPC,zeroDetection,branch,rs,rt,Bin,Ain,instruction);
 
 end
 
 always @(posedge clk)
 begin
-PC <= nextPC;
+
+PC =nextPC;
+
+
+
 end
 
 

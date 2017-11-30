@@ -1,5 +1,8 @@
 module SignExtender(input signed [15:0]in ,output reg signed [31:0]out);
-	
+	initial
+		begin
+			out<=0;
+		end
 	always@(in)
 		begin				   
 			out={{16{in[15]}},in[15:0]};

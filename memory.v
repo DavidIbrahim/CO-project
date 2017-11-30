@@ -21,7 +21,7 @@ end
 always @(posedge Clk)
 begin
 	//$display("k %b",IMemory[0]);
-	$display("k %b",Pc);	
+		//$display("k %b",Pc);	
 	//$display("k %b",Clk);	
 	InstReg <= IMemory[Pc>>2]; // as pc points to a bit so divide by 4 to point to a word 
         
@@ -58,14 +58,14 @@ initial
 end	
 always @(posedge Clk )
 begin			 
-	$display("it is a posedge");
+	//$display("it is a posedge");
 if (MemWrite)
 	DMemory[Address>>2] <= writeData ;  
 else   
 	begin						
-		$display("mem Write=0,address=%b",Address>>2);
+		//$display("mem Write=0,address=%b",Address>>2);
 	ReadData <= DMemory[Address>>2] ; 	
-	$display("ReadData=%b",ReadData);
+	//$display("ReadData=%b",ReadData);
 	end
 
 end

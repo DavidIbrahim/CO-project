@@ -47,9 +47,11 @@ wire signed [31:0] Out1 , Out2 ;
 wire signed [31:0] ALUResult;
 wire signed [31:0] DataToWrite;
 reg [0:4]op;
+
 OurALU z(ALUResult,overflow,Out1,Out2,op,ShiftCount);
 Mux_32bits a (WD,ALUResult,Mux_Ctrl,DataToWrite);
 RegisterFile s(RR1,RR2,WR,DataToWrite,WE,Clk,Out1,Out2);
+
 initial
 begin
 $monitor($time ,, " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d Zero : %d",Clk,Out1,Out2,ALUResult,DataToWrite,overflow);
@@ -325,3 +327,9 @@ end
 
 endmodule
 
+module AndGate_1bit(in1,in2,out)
+output out;
+input in1,in2;	
+assign out = in1 & in2;
+
+endmodule

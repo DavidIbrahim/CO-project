@@ -86,8 +86,8 @@ Clk = 0 ;
 
 always
 begin
-#1 Clk  = 0 ;//N=1
-#1 Clk  = 1 ;
+#5 Clk  = 0 ;//N=1
+#5 Clk  = 1 ;
 end
 
 endmodule

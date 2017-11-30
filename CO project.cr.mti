@@ -1,1 +1,61 @@
+E:/Projects/Verilog/testing.v {1 {vlog -work work -stats=none {E:\Projects\Verilog\testing.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module RegisterFile
+-- Compiling module project1TestBench
+-- Compiling module Mux_32bits
+-- Compiling module MuxTestBench
+-- Compiling module OurALU
+-- Compiling module AndGate_1bit
 
+Top level modules:
+	project1TestBench
+	MuxTestBench
+	AndGate_1bit
+
+} {} {}} E:/Projects/Verilog/MemTestBench.v {1 {vlog -work work -stats=none E:/Projects/Verilog/MemTestBench.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module InstMemTestBench
+-- Compiling module DataMemTestBench
+
+Top level modules:
+	InstMemTestBench
+	DataMemTestBench
+
+} {} {}} E:/Projects/Verilog/ALUControl.v {1 {vlog -work work -stats=none E:/Projects/Verilog/ALUControl.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALUControl
+-- Compiling module ALUControlTB
+
+Top level modules:
+	ALUControlTB
+
+} {} {}} E:/Projects/Verilog/SignExtender.v {1 {vlog -work work -stats=none E:/Projects/Verilog/SignExtender.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module SignExtender
+-- Compiling module SignExtenderTestBench
+
+Top level modules:
+	SignExtenderTestBench
+
+} {} {}} E:/Projects/Verilog/controlUnit.v {1 {vlog -work work -stats=none E:/Projects/Verilog/controlUnit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module controlUnit
+-- Compiling module controlUnitTestBench
+
+Top level modules:
+	controlUnitTestBench
+
+} {} {}} E:/Projects/Verilog/memory.v {1 {vlog -work work -stats=none {E:\Projects\Verilog\memory.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module InstMem
+-- Compiling module DataMem
+-- Compiling module ClkGen
+-- Compiling module Mux_5bits
+
+Top level modules:
+	InstMem
+	DataMem
+	ClkGen
+	Mux_5bits
+
+} {} {}}

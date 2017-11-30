@@ -1,6 +1,6 @@
 module CPU (clk) ;
 input clk;
-parameter LW = 6'b100011, SW = 6'b101011, BEQ = 6'b000100, ALUop = 6'b000000; //for checking op code
+
 wire [31:0] Ain, Bin; //Input to the main ALU 
 reg[31:0] PC; //Memory
 wire[31:0] readDataMemory ; // output of dataMemory
@@ -11,7 +11,7 @@ wire[31:0] nextPC_branch; // this is is the new address of pc if the instruction
 wire signed [31:0] ALUResult;
 wire signed [31:0]writeData;
 wire [4:0] writeRegister; // the address of the registers to write output of the mux
-
+wire [1:0] aluOp;
 
 wire regWrite,regDst,aluSrc,memWrite,memToReg,memRead,branch,zeroDetection,selectorOfBranchMux;  
 
@@ -69,8 +69,16 @@ end
 
 always @(posedge clk)
 begin
-PC <= nextPC;
+PC <= PC+4;
 end
 
+
+endmodule
+
+module cpuTestBench();
+
+wire clk ;
+ ClkGen c(clk);
+ CPU a(clk) ;
 
 endmodule

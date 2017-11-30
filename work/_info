@@ -9,7 +9,7 @@ z2
 cModel Technology
 dC:/Modeltech_pe_edu_10.4a/examples
 vALUControl
-Z0 !s110 1511996663
+Z0 !s110 1512002364
 !i10b 1
 !s100 IV8m`ZX@BjnIMb]h0z8DQ3
 IG:g=35`[6NF9MKBmQ^MbM2
@@ -23,7 +23,7 @@ Z6 OP;L;10.4a;61
 r1
 !s85 0
 31
-Z7 !s108 1511996663.000000
+Z7 !s108 1512002364.000000
 Z8 !s107 E:/Projects/Verilog/ALUControl.v|
 Z9 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/ALUControl.v|
 !s101 -O0
@@ -52,24 +52,46 @@ R9
 !i113 1
 R10
 n@a@l@u@control@t@b
-vClkGen
+vAndGate_1bit
 R0
 !i10b 1
-!s100 Z2>K>ldUL`I4z4GBOaik53
-IYbIY0JHHT7n21EdCo8Ql[3
+!s100 H@cBYHAjgzH6[ZdK[61;d3
+IUzJKZ4=eWWYL;Kh@nET<e1
 R1
 R2
-Z11 w1511996539
-Z12 8E:\Projects\Verilog\memory.v
-Z13 FE:\Projects\Verilog\memory.v
-L0 78
+Z11 w1512000689
+Z12 8E:\Projects\Verilog\testing.v
+Z13 FE:\Projects\Verilog\testing.v
+L0 330
 R6
 r1
 !s85 0
 31
 R7
-Z14 !s107 E:\Projects\Verilog\memory.v|
-Z15 !s90 -reportprogress|300|-work|work|-stats=none|E:\Projects\Verilog\memory.v|
+Z14 !s107 E:\Projects\Verilog\testing.v|
+Z15 !s90 -reportprogress|300|-work|work|-stats=none|E:\Projects\Verilog\testing.v|
+!s101 -O0
+!i113 1
+R10
+n@and@gate_1bit
+vClkGen
+R0
+!i10b 1
+!s100 `>8nBFTF]U0FG1kRHUTK=3
+I@m^Ko6lJY]XIUlROI6NP;2
+R1
+R2
+Z16 w1512000131
+Z17 8E:\Projects\Verilog\memory.v
+Z18 FE:\Projects\Verilog\memory.v
+Z19 L0 78
+R6
+r1
+!s85 0
+31
+R7
+Z20 !s107 E:\Projects\Verilog\memory.v|
+Z21 !s90 -reportprogress|300|-work|work|-stats=none|E:\Projects\Verilog\memory.v|
 !s101 -O0
 !i113 1
 R10
@@ -77,21 +99,21 @@ n@clk@gen
 vcontrolUnit
 R0
 !i10b 1
-!s100 PcK?L1EWZZb3?o_ei2=c82
-Icgegm`IZXkR:RPknmOcfJ3
+!s100 mag[om5Bz]@1OZ821LdV43
+Ik;OB7l?7[hUYgQk[fQ4gm3
 R1
 R2
-Z16 w1511810396
-Z17 8E:/Projects/Verilog/controlUnit.v
-Z18 FE:/Projects/Verilog/controlUnit.v
+Z22 w1512001529
+Z23 8E:/Projects/Verilog/controlUnit.v
+Z24 FE:/Projects/Verilog/controlUnit.v
 L0 1
 R6
 r1
 !s85 0
 31
 R7
-Z19 !s107 E:/Projects/Verilog/controlUnit.v|
-Z20 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/controlUnit.v|
+Z25 !s107 E:/Projects/Verilog/controlUnit.v|
+Z26 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/controlUnit.v|
 !s101 -O0
 !i113 1
 R10
@@ -103,43 +125,65 @@ R0
 I0OCk1nXf4493>a2akYATC3
 R1
 R2
-R16
-R17
-R18
+R22
+R23
+R24
 L0 75
 R6
 r1
 !s85 0
 31
 R7
-R19
-R20
+R25
+R26
 !s101 -O0
 !i113 1
 R10
 ncontrol@unit@test@bench
 vCPU
-Z21 !s110 1511996664
+R0
 !i10b 1
-!s100 3MzP2kWHgAR]]M;YTHlL<2
-IKJAFXfdAOg>]aTe?UI9aV0
+!s100 dei;PW8QXDUeb]dJ5J20m1
+InEfF9SbA53dYKa6aVXgfY0
 R1
 R2
-w1511995971
-8E:\Projects\Verilog\Processor.v
-FE:\Projects\Verilog\Processor.v
+Z27 w1512002236
+Z28 8E:\Projects\Verilog\Processor.v
+Z29 FE:\Projects\Verilog\Processor.v
 L0 1
 R6
 r1
 !s85 0
 31
 R7
-!s107 E:\Projects\Verilog\Processor.v|
-!s90 -reportprogress|300|-work|work|-stats=none|E:\Projects\Verilog\Processor.v|
+Z30 !s107 E:\Projects\Verilog\Processor.v|
+Z31 !s90 -reportprogress|300|-work|work|-stats=none|E:\Projects\Verilog\Processor.v|
 !s101 -O0
 !i113 1
 R10
 n@c@p@u
+vcpuTestBench
+R0
+!i10b 1
+!s100 J>B9_Yz7VLLA[T`8>3:QN0
+Iz1X9dSUK<An8;A?BQBoj:0
+R1
+R2
+R27
+R28
+R29
+R19
+R6
+r1
+!s85 0
+31
+R7
+R30
+R31
+!s101 -O0
+!i113 1
+R10
+ncpu@test@bench
 vDataMem
 R0
 !i10b 1
@@ -147,17 +191,17 @@ R0
 IT`DNa3o3Xoo]BTC_jF^UF2
 R1
 R2
-R11
-R12
-R13
+R16
+R17
+R18
 L0 35
 R6
 r1
 !s85 0
 31
 R7
-R14
-R15
+R20
+R21
 !s101 -O0
 !i113 1
 R10
@@ -165,21 +209,21 @@ n@data@mem
 vDataMemTestBench
 R0
 !i10b 1
-!s100 T0Zncbog`T6bda=F;8^TU1
-IRDDMK7[R`e`EHY;Ql1oX^3
+!s100 [JdM>]cb?XVGz9;10>O^21
+IIYMInYSI4;^Oh^DK1Y^I70
 R1
 R2
-Z22 w1511996661
-Z23 8E:/Projects/Verilog/MemTestBench.v
-Z24 FE:/Projects/Verilog/MemTestBench.v
-L0 43
+Z32 w1512000838
+Z33 8E:/Projects/Verilog/MemTestBench.v
+Z34 FE:/Projects/Verilog/MemTestBench.v
+L0 40
 R6
 r1
 !s85 0
 31
 R7
-Z25 !s107 E:/Projects/Verilog/MemTestBench.v|
-Z26 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/MemTestBench.v|
+Z35 !s107 E:/Projects/Verilog/MemTestBench.v|
+Z36 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/MemTestBench.v|
 !s101 -O0
 !i113 1
 R10
@@ -191,17 +235,17 @@ R0
 IN1UGUk3PajMT:TmTTWAG62
 R1
 R2
-R11
-R12
-R13
+R16
+R17
+R18
 L0 2
 R6
 r1
 !s85 0
 31
 R7
-R14
-R15
+R20
+R21
 !s101 -O0
 !i113 1
 R10
@@ -209,21 +253,21 @@ n@inst@mem
 vInstMemTestBench
 R0
 !i10b 1
-!s100 ?haE1;jz=l0YR]MaM]^VQ0
-IcOFk^>g3W74:?M_7>:WL=0
+!s100 `a6>6B9GHU`ozGFbf1^=k0
+I@<5chJRdeZ87Kgde@Q<Vf1
 R1
 R2
-R22
-R23
-R24
+R32
+R33
+R34
 L0 1
 R6
 r1
 !s85 0
 31
 R7
-R25
-R26
+R35
+R36
 !s101 -O0
 !i113 1
 R10
@@ -236,16 +280,37 @@ IWDGFaA];=G7Ab>4QW4OZZ1
 R1
 R2
 w1511792551
-Z27 8E:/Projects/Verilog/testing.v
-Z28 FE:/Projects/Verilog/testing.v
-Z29 L0 167
+Z37 8E:/Projects/Verilog/testing.v
+Z38 FE:/Projects/Verilog/testing.v
+Z39 L0 167
 R6
 r1
 !s85 0
 31
 !s108 1511795595.000000
-Z30 !s107 E:/Projects/Verilog/testing.v|
-Z31 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/testing.v|
+Z40 !s107 E:/Projects/Verilog/testing.v|
+Z41 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/testing.v|
+!s101 -O0
+!i113 1
+R10
+vmux_32bit
+!s110 1511802826
+!i10b 1
+!s100 PTl:_G3D8m?6]h^TnkR[[0
+Im@?_dOHT>ZlfCmig>4HSP0
+R1
+R2
+w1511802701
+R37
+R38
+R39
+R6
+r1
+!s85 0
+31
+!s108 1511802826.000000
+R40
+R41
 !s101 -O0
 !i113 1
 R10
@@ -257,59 +322,38 @@ IfIWkgVR[`M9;NO<QeY:_>3
 R1
 R2
 w1511810477
-Z32 8E:\Projects\Verilog\testing.v
-Z33 FE:\Projects\Verilog\testing.v
-R29
+R12
+R13
+R39
 R6
 r1
 !s85 0
 31
 !s108 1511810479.000000
-!s107 E:\Projects\Verilog\testing.v|
-Z34 !s90 -reportprogress|300|-work|work|-stats=none|E:\Projects\Verilog\testing.v|
+R14
+R15
 !s101 -O0
 !i113 1
 R10
 n@mux_32bit
-vmux_32bit
-!s110 1511802826
-!i10b 1
-!s100 PTl:_G3D8m?6]h^TnkR[[0
-Im@?_dOHT>ZlfCmig>4HSP0
-R1
-R2
-w1511802701
-R27
-R28
-R29
-R6
-r1
-!s85 0
-31
-!s108 1511802826.000000
-R30
-R31
-!s101 -O0
-!i113 1
-R10
 vMux_32bits
-R21
+R0
 !i10b 1
 !s100 V8Um8fB?SH7Izo5Z:7AVS0
 I8HadJXbTg7:WiJbXhI[Qc1
 R1
 R2
-R3
-R32
-R33
+R11
+R12
+R13
 L0 192
 R6
 r1
 !s85 0
 31
-Z35 !s108 1511996664.000000
-Z36 !s107 E:\Projects\Verilog\testing.v|
-R34
+R7
+R14
+R15
 !s101 -O0
 !i113 1
 R10
@@ -322,37 +366,16 @@ IYMfUR[P@;2RP?obBIbH7J0
 R1
 R2
 w1511792630
-Z37 8E:/Projects/Verilog/memory.v
-Z38 FE:/Projects/Verilog/memory.v
-Z39 L0 66
+Z42 8E:/Projects/Verilog/memory.v
+Z43 FE:/Projects/Verilog/memory.v
+Z44 L0 66
 R6
 r1
 !s85 0
 31
 !s108 1511794851.000000
-Z40 !s107 E:/Projects/Verilog/memory.v|
-Z41 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/memory.v|
-!s101 -O0
-!i113 1
-R10
-vmux_5bits
-!s110 1511802705
-!i10b 1
-!s100 m6d9@VEbn5gTNah1mEnGR2
-IzEinC5Y;;5DUh220_S37:3
-R1
-R2
-w1511795591
-R37
-R38
-R39
-R6
-r1
-!s85 0
-31
-!s108 1511802705.000000
-R40
-R41
+Z45 !s107 E:/Projects/Verilog/memory.v|
+Z46 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/memory.v|
 !s101 -O0
 !i113 1
 R10
@@ -363,10 +386,53 @@ R0
 IHo1jNSi0n0@;YFel^IDUi3
 R1
 R2
+R16
+R17
+R18
+L0 95
+R6
+r1
+!s85 0
+31
+R7
+R20
+R21
+!s101 -O0
+!i113 1
+R10
+n@mux_5bits
+vmux_5bits
+!s110 1511802705
+!i10b 1
+!s100 m6d9@VEbn5gTNah1mEnGR2
+IzEinC5Y;;5DUh220_S37:3
+R1
+R2
+w1511795591
+R42
+R43
+R44
+R6
+r1
+!s85 0
+31
+!s108 1511802705.000000
+R45
+R46
+!s101 -O0
+!i113 1
+R10
+vMuxTestBench
+R0
+!i10b 1
+!s100 >J>>mhK0F@RM3X_C@DX1i0
+IO=D=ZN<OO1=PSMS>3i7nc2
+R1
+R2
 R11
 R12
 R13
-L0 95
+L0 206
 R6
 r1
 !s85 0
@@ -377,135 +443,113 @@ R15
 !s101 -O0
 !i113 1
 R10
-n@mux_5bits
-vMuxTestBench
-R21
-!i10b 1
-!s100 >J>>mhK0F@RM3X_C@DX1i0
-IO=D=ZN<OO1=PSMS>3i7nc2
-R1
-R2
-R3
-R32
-R33
-L0 206
-R6
-r1
-!s85 0
-31
-R35
-R36
-R34
-!s101 -O0
-!i113 1
-R10
 n@mux@test@bench
 vOurALU
-R21
+R0
 !i10b 1
 !s100 gUPiK8QhNb26TEmUiHzkY3
 IS0M?3OCh_?`STII67A2RP3
 R1
 R2
-R3
-R32
-R33
+R11
+R12
+R13
 L0 229
 R6
 r1
 !s85 0
 31
-R35
-R36
-R34
+R7
+R14
+R15
 !s101 -O0
 !i113 1
 R10
 n@our@a@l@u
 vproject1TestBench
-R21
+R0
 !i10b 1
 !s100 50Ce[WLN^Kgd=H1KPdcG<2
 IiFDZ>UHN^@Aj79Uk4c9UH3
 R1
 R2
-R3
-R32
-R33
+R11
+R12
+R13
 L0 38
 R6
 r1
 !s85 0
 31
-R35
-R36
-R34
+R7
+R14
+R15
 !s101 -O0
 !i113 1
 R10
 nproject1@test@bench
 vRegisterFile
-R21
+R0
 !i10b 1
 !s100 PF914HJRL0L5:@e9Qa@9T1
 IQo5WB:J23<lhomSUXGcWC1
 R1
 R2
-R3
-R32
-R33
+R11
+R12
+R13
 L0 2
 R6
 r1
 !s85 0
 31
-R35
-R36
-R34
+R7
+R14
+R15
 !s101 -O0
 !i113 1
 R10
 n@register@file
 vSignExtender
-R21
+R0
 !i10b 1
 !s100 UKcZQhX96T_J_@;YX3mG_3
 I_EUhFP4m6G7<I5W:kLKRH3
 R1
 R2
-R16
-Z42 8E:/Projects/Verilog/SignExtender.v
-Z43 FE:/Projects/Verilog/SignExtender.v
+Z47 w1511810396
+Z48 8E:/Projects/Verilog/SignExtender.v
+Z49 FE:/Projects/Verilog/SignExtender.v
 L0 1
 R6
 r1
 !s85 0
 31
-R35
-Z44 !s107 E:/Projects/Verilog/SignExtender.v|
-Z45 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/SignExtender.v|
+R7
+Z50 !s107 E:/Projects/Verilog/SignExtender.v|
+Z51 !s90 -reportprogress|300|-work|work|-stats=none|E:/Projects/Verilog/SignExtender.v|
 !s101 -O0
 !i113 1
 R10
 n@sign@extender
 vSignExtenderTestBench
-R21
+R0
 !i10b 1
 !s100 Z=_FSM4iBVFHe[aniXm_`0
 IGMM_Gl^1?M:BBKE@:7;el0
 R1
 R2
-R16
-R42
-R43
+R47
+R48
+R49
 L0 11
 R6
 r1
 !s85 0
 31
-R35
-R44
-R45
+R7
+R50
+R51
 !s101 -O0
 !i113 1
 R10

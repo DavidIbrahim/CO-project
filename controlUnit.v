@@ -64,7 +64,7 @@ module controlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,r
 					memWrite <=0;
 					branch<=0;
 					aluOp<=00;						   
-					$display("The instruction is not supported");
+					$display("The instruction is not supported %d",opCode);
 				end		
 				
 		end

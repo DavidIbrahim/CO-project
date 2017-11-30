@@ -1,7 +1,7 @@
 module InstMemTestBench;
 	
 	//integer file;  
-	reg[31:0] IMemory[0:1023];
+	
 	reg [31:0]Pc=0;
 	reg Clk=1; 
 	wire [31:0]InstReg;			 
@@ -18,10 +18,7 @@ module InstMemTestBench;
 	initial
 		begin	
 			
-			for(i=0;i<1024;i=i+1)
-				begin
-					IMemory[i]=0;
-				end					
+					
 			$monitor($time,,,"instruction is %b",InstReg);	
 			//$display("%b",IMemory[5]);	 
 			//$readmemb("instructionMemory.txt",IMemory);

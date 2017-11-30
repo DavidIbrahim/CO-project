@@ -56,7 +56,7 @@ initial
 		$readmemb("DataMemory.txt",DMemory);		
 		$display("%b",DMemory[1]);
 end	
-always @(posedge Clk )
+always @(Address )
 begin			 
 	//$display("it is a posedge");
 if (MemWrite)

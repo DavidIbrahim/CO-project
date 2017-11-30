@@ -29,14 +29,6 @@ Top level modules:
 	InstMemTestBench
 	DataMemTestBench
 
-} {} {}} E:/Projects/Verilog/SignExtender.v {1 {vlog -work work -stats=none E:/Projects/Verilog/SignExtender.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module SignExtender
--- Compiling module SignExtenderTestBench
-
-Top level modules:
-	SignExtenderTestBench
-
 } {} {}} E:/Projects/Verilog/Processor.v {1 {vlog -work work -stats=none E:/Projects/Verilog/Processor.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module CPU
@@ -45,18 +37,13 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	cpuTestBench
 
-} {} {}} E:/Projects/Verilog/memory.v {1 {vlog -work work -stats=none E:/Projects/Verilog/memory.v
+} {} {}} E:/Projects/Verilog/SignExtender.v {1 {vlog -work work -stats=none E:/Projects/Verilog/SignExtender.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module InstMem
--- Compiling module DataMem
--- Compiling module ClkGen
--- Compiling module Mux_5bits
+-- Compiling module SignExtender
+-- Compiling module SignExtenderTestBench
 
 Top level modules:
-	InstMem
-	DataMem
-	ClkGen
-	Mux_5bits
+	SignExtenderTestBench
 
 } {} {}} E:/Projects/Verilog/controlUnit.v {1 {vlog -work work -stats=none E:/Projects/Verilog/controlUnit.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015

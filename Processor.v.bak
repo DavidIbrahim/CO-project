@@ -65,15 +65,15 @@ initial
 begin
 PC = 0;
 //nextPCReg=0;
-$monitor($time,,"PC = %d , proceedingPC = %d, nextPC_branch = %d ,nextPC = %d , \n zeroDetec = %d,branch=%d ,rs=%d,rt=%d,Bin = %d Ain = %d instruction%d",
-PC,proceedingPC,nextPC_branch,nextPC,zeroDetection,branch,rs,rt,Bin,Ain,instruction);
+$monitor($time,,"PC = %d , instruction=%h, ,rs=%d,rt=%d,Bin = %d Ain = %d,AluResult = %d ",
+PC,instruction,rs,rt,Bin,Ain,ALUResult);
 
 end
 
 always @(posedge clk)
 begin
 
-PC =nextPC;
+PC <=nextPC;
 
 
 

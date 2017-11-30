@@ -18,7 +18,7 @@ initial
 		$readmemb("instructionMemory.txt",IMemory);	
 end					
 
-always @(posedge Clk)
+always @(Pc)
 begin
 	//$display("k %b",IMemory[0]);
 		//$display("k %b",Pc);	

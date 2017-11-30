@@ -18,7 +18,7 @@ initial
 		$readmemb("instructionMemory.txt",IMemory);	
 end					
 
-always @(posedge Clk)
+always @(Pc)
 begin
 	//$display("k %b",IMemory[0]);
 		//$display("k %b",Pc);	
@@ -56,7 +56,7 @@ initial
 		$readmemb("DataMemory.txt",DMemory);		
 		$display("%b",DMemory[1]);
 end	
-always @(posedge Clk )
+always @(Address )
 begin			 
 	//$display("it is a posedge");
 if (MemWrite)
@@ -86,8 +86,8 @@ Clk = 0 ;
 
 always
 begin
-#1 Clk  = 0 ;//N=1
-#1 Clk  = 1 ;
+#5 Clk  = 0 ;//N=1
+#5 Clk  = 1 ;
 end
 
 endmodule

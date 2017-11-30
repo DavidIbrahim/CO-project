@@ -33,11 +33,11 @@ RegisterFile registerFile(rs,rt,writeRegister,writeData,regWrite,clk,Ain,readDat
 
 SignExtender signExtend(immediate_address ,extended_immediate);
 
-controlUnit mainControlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,regWrite);//control unit
+controlUnit mainControlUnit(opCode,regDst,branch,memRead,memToReg,aluOP,memWrite,aluSrc,regWrite);//control unit
 
 Mux_32bits secondMux(readData2,extended_immediate,aluSrc,Bin);	 // mux before ALU
 
-ALUControl aluControlUnit(operation, aluOp, funct);// alu control unit
+ALUControl aluControlUnit(operation, aluOP, funct);// alu control unit
 
 OurALU mainAlu(ALUResult,xxxxx,Ain,Bin,operation,shamt); // main alu
 
@@ -73,7 +73,7 @@ end
 always @(posedge clk)
 begin
 
-PC =nextPC;
+PC <=nextPC;
 
 
 

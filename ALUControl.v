@@ -4,13 +4,8 @@ output reg [3:0] Op;
 input [1:0] ALUOp;
 input [5:0] funct;
 
-parameter AND=4'b0000;
-parameter OR= 4'b0001; 
-parameter ADD= 4'b0010;
-parameter SUB= 4'b0110;
-parameter SLT= 4'b0111;
-parameter NOR= 4'b1100;
-parameter SLL= 4'b1110;
+parameter AND=4'b0000 , OR= 4'b0001 , ADD= 4'b0010,
+          SUB= 4'b0110, SLT= 4'b0111, NOR= 4'b1100, SLL= 4'b1110;
 
 
 always@ (ALUOp or funct)
@@ -19,10 +14,10 @@ begin
 if(ALUOp == 2'b00) //add
 Op <= ADD;
 
-if(ALUOp == 2'b01) //sub
+else if(ALUOp == 2'b01) //sub
 Op <= SUB;
 
-if(ALUOp == 2'b10) //funct
+else if(ALUOp == 2'b10) //funct
 begin
 
 if(funct == 36) Op <= AND;
@@ -34,6 +29,11 @@ if(funct == 39) Op <= NOR;
 if(funct == 0 ) Op <= SLL;
 
 end //endif
+
+
+else
+Op<=4'bzzzz;
+
 end //always
 
 

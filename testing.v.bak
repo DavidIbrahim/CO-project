@@ -1,17 +1,17 @@
 
 module RegisterFile(RR1,RR2,WR,WD,WE,Clk,Out1,Out2);
+
 input [4:0] RR1 , RR2 ;  // the address of the registers to read
 input [4:0] WR; // the address of the registers to write
-
 input signed [31:0]  WD;   // data to write
 input WE;    		//write enable
 input Clk; 		
+
 output reg signed [31:0] Out1 , Out2 ;  // output of reading register 1 and reading register 2
 
 reg signed [31:0] registers[31:0]; // an array of 32 registers each of 32 bits
 
 integer i;
-
 initial
 begin
 
@@ -20,8 +20,8 @@ begin
 			registers[i]=i;
 		end				
 end
-
-always @(*)
+// * //any change
+always @(RR1 , RR2)
  begin
 	
 	Out1 <= registers[RR1]; 
@@ -32,8 +32,8 @@ end
 
 
 
-
-always @(*) //The register file should perform a write operation every clock cycle only if the ?write_enable? signal is set to true,
+//posedge clk
+always @(WE) //The register file should perform a write operation every clock cycle only if the ?write_enable? signal is set to true,
 begin
 if(WE) 
 	registers[WR] <= WD ;
@@ -196,6 +196,8 @@ endmodule
 
 
 
+
+
 module Mux_32bits ( in1 , in2 , sel , out);
 
 input [31:0] in1,in2;
@@ -204,11 +206,12 @@ output reg [31:0] out ;
 
 always @ (in1 or in2 or sel)
 begin
-if(sel ==1'b0)
- out = in1 ;
-else out = in2 ;
+if(sel ==1'b0)   out = in1 ; // 0
+else             out = in2 ; // 1
 end
+
 endmodule
+
 
 module MuxTestBench;
 reg [31:0]in1;
@@ -233,105 +236,112 @@ Mux_32bits a ( in1 , in2 , sel , out);
 
 endmodule
 
-module OurALU (Result,zeroDetection,A,B,Op,ShiftCount);
-output wire zeroDetection;
+
+module OurALU 
+(Result,zeroDetection,A,B,Op,ShiftCount);
+// we ignored the zero detection as it will be done on the reg it self also we ignored the overflow
+//output reg zeroDetection;
 output reg [31:0] Result;
-reg Overflow;
+//reg Overflow; // not needed for now
+
 input signed[31:0] A;
 input signed[31:0] B;
 input [3:0] Op;
 input [4:0] ShiftCount;
+
 wire [31:0] B_neg;
 assign B_neg = - B;
-assign zeroDetection = (A==B);
+//assign zeroDetection = (A==B)? 1:0 ;
 
 //Addition op 2
 always @(A or B or Op)
 begin
+
 if(Op == 4'b0010)
 begin
-
 Result <= (A+B);
-
-if(A[31]==B[31] && A[31]== ~Result[31]) Overflow <= 1;
-else Overflow <=0;
-
+// for overflow
+//if(A[31]==B[31] && A[31]== ~Result[31]) Overflow <= 1;
+//else Overflow <=0;
 end
 
 //Subtraction op 6
-if(Op == 4'b0110)
+else if(Op == 4'b0110)
 begin
 
 Result <= (A-B);
-
-if(A[31]==B_neg[31] && A[31]== ~Result[31]) Overflow <= 1;
-else Overflow <=0;
+// for overflow
+//if(A[31]==B_neg[31] && A[31]== ~Result[31]) Overflow <= 1;
+//else Overflow <=0;
 
 end
 
 //And op 0
-if(Op == 4'b0000)
+else if(Op == 4'b0000)
 begin
 
 Result <= (A&B);
-Overflow <=0;
+//Overflow <=0;
 
 end
 
 //Or op 1
-if(Op == 4'b0001)
+else if(Op == 4'b0001)
 begin
 
 Result <= (A|B);
-Overflow <=0;
+//Overflow <=0;
 
 end
 
 //Nor op 12
-if(Op == 4'b1100)
+else if(Op == 4'b1100)
 begin
 
 Result <= ~(A|B);
-Overflow <=0;
+//Overflow <=0;
 
 end
 
 //Shift left logical op 14
-if(Op == 4'b1110)
+else if(Op == 4'b1110)
 begin
 Result <= (A<<ShiftCount);
-Overflow <= 0;
+//Overflow <= 0;
 end
 
 //Shift right logical op 15
-if(Op == 4'b1101)
+else if(Op == 4'b1101)
 begin
 Result <= (A>>ShiftCount);
-Overflow <= 0;
+//Overflow <= 0;
 end
 
 //Shift right arithmetic op 13
-if(Op == 4'b1111)
+else if(Op == 4'b1111)
 begin
 Result <= (A>>>ShiftCount);
-if(A[31]==~Result[31])
-Overflow <= 1;
-else Overflow <= 0;
+//if(A[31]==~Result[31])
+//Overflow <= 1;
+//else Overflow <= 0;
 end
 
 //Greater than Op 8
-if(Op == 4'b1000)
+else if(Op == 4'b1000)
   if(A>B) Result = 1; 
 	else Result = 0;
 //smaller than Op 7 (slt)
-if(Op == 4'b0111)
+else if(Op == 4'b0111)
   if(A<B) Result = 1; 
 	else Result = 0;
-
+else
+Result = 31'z;
+// this to make it not dependent on a clock and synthis the code later
 end 
 
 
 endmodule
+
 
 module AndGate_1bit(in1,in2,out);
 output out;

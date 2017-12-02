@@ -42,12 +42,12 @@ input clk;
 
 reg  [31:0] PC; //Memory
 wire [31:0] proceedingPC ; //  =pc+4
-reg  [31:0] nextPC ; // output of third mux chooses between proceedingPC(PC+4) and branch address
+wire [31:0] nextPC ; // output of third mux chooses between proceedingPC(PC+4) and branch address
 wire [31:0] instruction; // output of Instrection memory
 
 /////////////////////////////////////////////////////////////////////////////////////////// between stage 1 and 2//////////////////////////////////////////////
 
-reg[31:0]   IF_ID_IR  , IF_ID_pc  ;//in from inst and procceding pc
+reg  [31:0]   IF_ID_IR  , IF_ID_pc  ;//in from inst and procceding pc
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////stage 2//////////////////////////////////////////////////////
@@ -56,8 +56,8 @@ wire [1:0] aluOP;///////////control unit outputs
 wire regWrite,regDst,aluSrc,memWrite,memToReg,memRead,branch;/////////control unit outputs
 
 
-wire [5:0]opCode;// Access Instruction fields fields/
-wire [4:0] rs, rt ;
+wire  [5:0]opCode;// Access Instruction fields fields/
+wire  [4:0] rs, rt ;
 
 wire  [31:0] Ain;
 wire  [31:0]readData2; // output of fileregister and input to through the pipeline the second mux
@@ -66,7 +66,7 @@ wire  [15:0]immediate_address;// Access Instruction fields fields
 
 /////////////////////////////////////////////////////////////////////////////////////// between stage 2 and 3//////////////////////////////////////////////////
 
-reg[31:0]   ID_EX_IR  , ID_EX_pc;//in from last pipeline reg
+reg [31:0]   ID_EX_IR  , ID_EX_pc;//in from last pipeline reg
 
 
 reg     ID_EX_regWrite,        ID_EX_regDst,       ID_EX_aluSrc, 
@@ -75,30 +75,31 @@ reg     ID_EX_regWrite,        ID_EX_regDst,       ID_EX_aluSrc,
 reg [1:0] ID_EX_aluOP;/////////in from control unit outputs
 
 
-reg[31:0]   ID_EX_A     ;
-reg[31:0]   ID_EX_B     ;//in from the register file
+reg [31:0]   ID_EX_A     ;
+reg [31:0]   ID_EX_B     ;//in from the register file
 
-reg[31:0]   ID_EX_extended_immediate;//in from sign extended
+reg [31:0]   ID_EX_extended_immediate;//in from sign extended
 
  
 ////////////////////////////////////////////////////////////////////////////////////////////////for stage 3///////////////////////////////////////////////////
 
 wire  [31:0] Bin; //Input to the main ALU
-wire shamt , funct ; // Access Instruction fields fields ////
-wire [3:0]operation;//input to mainAlu and output from Alucontrol
-wire signed [31:0] ALUResult;
+wire  [4:0] shamt ;
+wire  [5:0]  funct ; // Access Instruction fields fields ////
+wire  [3:0]operation;//input to mainAlu and output from Alucontrol
+wire  [31:0] ALUResult;
 
 
 wire  [31:0] extended_shiftedBy2; // output of signExtender after being shifted by 2 , used in beq
-wire[31:0] nextPC_branch; // this  is the new address of pc if the instruction is beq
+wire  [31:0] nextPC_branch; // this  is the new address of pc if the instruction is beq
 wire zeroDetection;
 wire selectorOfBranchMux;  
 
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 3 and 4////////////////////////////////////////////
 
 
-reg[31:0]   EX_MEM_IR , EX_MEM_pc;
-reg[31:0]   EX_MEM_B ,  EX_MEM_ALUOut;
+reg  [31:0]   EX_MEM_IR , EX_MEM_pc;
+reg  [31:0]   EX_MEM_B ,  EX_MEM_ALUOut;
 
 reg     EX_MEM_regWrite,        EX_MEM_regDst ,
         EX_MEM_memWrite,        EX_MEM_memToReg,     EX_MEM_memRead       ;
@@ -107,7 +108,7 @@ reg     EX_MEM_regWrite,        EX_MEM_regDst ,
 /////////////////////////////////////////////////////////////////////////////////////////////for stage 4//////////////////////////////////////////////
 
 
-reg [31:0] readDataMemory ; // output of dataMemory
+wire [31:0] readDataMemory ; // output of dataMemory
 
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 4 and 5/////////////////////////////////////////////
 
@@ -124,10 +125,10 @@ reg[31:0] MEM_WB_ALUOut ,  MEM_WB_readDataMemory ;
 
 ////////////////////////////////////////////////////////////////////////////////////////////for stage 5////////////////////////////////////////////////
 
-wire signed [31:0]writeData;
-wire [4:0] writeRegister; // the address of the registers to write output of the mux
+wire  [31:0]writeData;
+wire  [4:0] writeRegister; // the address of the registers to write output of the mux
 
-wire[31:0] MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID ; 
+wire  [4:0] MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID ; 
 
 
 
@@ -171,7 +172,7 @@ Mux_32bits thirdMux( ID_EX_pc , nextPC_branch , selectorOfBranchMux , nextPC);	 
 Mux_32bits secondMux( ID_EX_B , ID_EX_extended_immediate , ID_EX_aluSrc ,  Bin);	 // mux before ALU
 
 
-OurALU mainAlu(ALUResult,xxxxx,ID_EX_A  ,      Bin      ,operation,shamt); // main alu
+OurALU mainAlu(ALUResult,xxxxxx,ID_EX_A  ,      Bin      ,operation,shamt); // main alu
 
 
 ALUControl aluControlUnit(operation, ID_EX_aluOP, funct);// alu control unit
@@ -286,7 +287,7 @@ begin
 /////////////////////////////////////////////////////////////////////////pipeline assignments all with parrellel blocking/////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////// for stage 1//////////////////////////////////////////////////////////////
-PC <=nextPC;
+PC <=proceedingPC;
 
 
 ///////////////////////////////////////////////////////////////// between stage 1 and 2 //////////////////////////////////////////////////////////

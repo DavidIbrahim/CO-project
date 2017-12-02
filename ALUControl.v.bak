@@ -46,7 +46,7 @@ wire [3:0] Op;
 
 initial
 begin
-$monitor($time ,, "ALUop: %b	funct: %d	ShiftCount: %d	Op:%b", ALUOp, funct, ShiftCount, Op);
+$monitor($time ,, "ALUop: %b	funct: %d	Op:%b", ALUOp, funct, Op);
 
 $display("lw-->add");
 ALUOp= 2'b00;

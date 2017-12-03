@@ -65,7 +65,7 @@ initial
 begin
 $monitor($time ,, " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d Zero : %d",Clk,Out1,Out2,ALUResult,DataToWrite,overflow);
 
-$display("       //put -2 in register 0 and read data from reg (0&1) ");
+//$display("       //put -2 in register 0 and read data from reg (0&1) ");
 #5
 Mux_Ctrl=0;
 

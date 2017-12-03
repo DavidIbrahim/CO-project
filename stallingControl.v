@@ -1,6 +1,6 @@
 module stallingControl(ID_EX_memRead,ID_EX_rt,IF_ID_rs,IF_ID_rt,stallSignal);
 	
-	
+	//input selectorOfBranchMux;
 	input ID_EX_memRead;//if 1 then lw operation				
 	input [4:0] ID_EX_rt,IF_ID_rs,IF_ID_rt;		
 	output reg stallSignal;
@@ -14,7 +14,10 @@ module stallingControl(ID_EX_memRead,ID_EX_rt,IF_ID_rs,IF_ID_rt,stallSignal);
 						begin stallSignal=1;	  /*$display($time,,"stall is 1");*/	 end
 					else
 						begin stallSignal=0;	 /* $display($time,,"stall is 0");*/	 end
-				end
+				end	
+			/*else if(selectorOfBranchMux)
+				stallSignal=1;*///beq
+				
 			else
 				begin stallSignal=0;	  /*$display($time,,"stall is 0");*/	 end
 

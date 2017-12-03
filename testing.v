@@ -63,7 +63,7 @@ initial
 begin
 $monitor($time ,, " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d Zero : %d",Clk,Out1,Out2,ALUResult,DataToWrite,overflow);
 
-$display("       //put -2 in register 0 and read data from reg (0&1) ");
+//$display("       //put -2 in register 0 and read data from reg (0&1) ");
 #5
 Mux_Ctrl=0;
 
@@ -259,7 +259,7 @@ begin
 if(Op == 4'b0010)
 begin
 Result <= (A+B);	 
-$strobe($time,,"addition entered A=%d B=%d result=%d",A,B,Result);
+//$strobe($time,,"addition entered A=%d B=%d result=%d",A,B,Result);
 // for overflow
 //if(A[31]==B[31] && A[31]== ~Result[31]) Overflow <= 1;
 //else Overflow <=0;

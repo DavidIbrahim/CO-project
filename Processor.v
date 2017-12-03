@@ -97,8 +97,8 @@ wire  [31:0] ALUResult;
 wire  [31:0] extended_shiftedBy2; // output of signExtender after being shifted by 2 , used in beq
 wire  [31:0] nextPC_branch; // this  is the new address of pc if the instruction is beq
 wire zeroDetection;
-wire selectorOfBranchMux;  
-
+reg selectorOfBranchMux;  
+reg branchSel;
 wire [1:0]forwardSignalForRs; 
 wire [1:0]forwardSignalForRt;
 wire [31:0]aluFirstInput;	
@@ -117,7 +117,7 @@ reg     EX_MEM_regWrite,        EX_MEM_regDst ,
 
 
 wire [31:0] readDataMemory ; // output of dataMemory
-reg[4:0]MEM_WB_rd;
+
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 4 and 5/////////////////////////////////////////////
 
 
@@ -129,8 +129,8 @@ reg    MEM_WB_regWrite,        MEM_WB_regDst , MEM_WB_memToReg ;
 
 
 reg[31:0] MEM_WB_ALUOut ,  MEM_WB_readDataMemory ;
-
-
+wire[4:0]MEM_WB_rd;
+wire[4:0]MEM_WB_rt;
 ////////////////////////////////////////////////////////////////////////////////////////////for stage 5////////////////////////////////////////////////
 
 wire  [31:0]writeData;
@@ -177,16 +177,16 @@ stallingControl sc1(memRead,IF_ID_rt,instruction[25:21],instruction[20:16],stall
 
 // also the branch is here 
 
-ForwardControl FC_rs(ID_EX_regWrite,EX_MEM_regWrite,EX_MEM_rd,MEM_WB_rd,ID_EX_rs,forwardSignalForRs);//compare with rs	
-ForwardControl FC_rt(EX_MEM_regWrite,MEM_WB_regWrite,EX_MEM_rd,MEM_WB_rd,ID_EX_rt,forwardSignalForRt);//compare with rt
-Mux_32bits thirdMux( ID_EX_pc , nextPC_branch , selectorOfBranchMux , nextPC);	 // mux before pc
+ForwardControl FC_rs(EX_MEM_regWrite,MEM_WB_regWrite,EX_MEM_rd,MEM_WB_rd,MEM_WB_rt,ID_EX_rs,forwardSignalForRs);//compare with rs	
+ForwardControl FC_rt(EX_MEM_regWrite,MEM_WB_regWrite,EX_MEM_rd,MEM_WB_rd,MEM_WB_rt,ID_EX_rt,forwardSignalForRt);//compare with rt
+Mux_32bits thirdMux( proceedingPC , nextPC_branch , selectorOfBranchMux , nextPC);	 // mux before pc
 
 Mux_32bits secondMux( ID_EX_B , ID_EX_extended_immediate , ID_EX_aluSrc ,  Bin);	 // mux before ALU
-Mux4To1_32bits rsDst(ID_EX_A,EX_MEM_ALUOut,MEM_WB_ALUOut,32'b0,forwardSignalForRs,aluFirstInput);//to decide the first alu destination
-Mux4To1_32bits rtDst(Bin,EX_MEM_ALUOut,MEM_WB_ALUOut,32'b0,forwardSignalForRt,aluSecondInput);//to decide the second alu destination
+Mux4To1_32bits rsDst(ID_EX_A,EX_MEM_ALUOut,MEM_WB_ALUOut,MEM_WB_readDataMemory,forwardSignalForRs,aluFirstInput);//to decide the first alu destination
+Mux4To1_32bits rtDst(Bin,EX_MEM_ALUOut,MEM_WB_ALUOut,MEM_WB_readDataMemory,forwardSignalForRt,aluSecondInput);//to decide the second alu destination
 
 OurALU mainAlu(ALUResult,xxxxx,aluFirstInput  ,      aluSecondInput      ,operation,shamt); // main alu
-
+															   
 
 ALUControl aluControlUnit(operation, ID_EX_aluOP, funct);// alu control unit
 
@@ -222,12 +222,14 @@ begin
 
 // for first inst only
 PC = 0;
-
+branchSel=0;  
+//ID_EX_branch=0;
+selectorOfBranchMux=0;
 IF_ID_IR = no_op; ID_EX_IR = no_op; EX_MEM_IR = no_op; MEM_WB_IR = no_op; // put no-ops in pipeline registers 
 
-$monitor($time,,"PC = %d , instruction=%h, ,rs=%d,rt=%d,Bin = %d Ain = %d,AluResult = %d ,memRead=%d", PC,instruction,rs,rt,Bin,Ain,ALUResult,memRead);
+$monitor($time,,"PC = %d ,instruction=%h, ,rs=%d,rt=%d,Bin = %d Ain = %d,AluResult = %d ,memRead=%d", PC,instruction,rs,rt,Bin,Ain,ALUResult,memRead);
 
-
+//$strobe($time,,"PC = %d ,proceedingPC=%d,nextPC=%d nextPC_branch=%d , selectorOfBranchMux=%d",PC,proceedingPC,nextPC,nextPC_branch,selectorOfBranchMux);
 end
 
 
@@ -267,12 +269,15 @@ assign ID_EX_rd=ID_EX_IR [15:11];
 assign zeroDetection = ((ID_EX_A-Bin)==0)?1:0;
 
 //branch
-assign extended_shiftedBy2 = (ID_EX_extended_immediate<<2);//still need
-assign nextPC_branch = ID_EX_pc + extended_shiftedBy2;
-assign selectorOfBranchMux = ID_EX_branch & zeroDetection;
+assign extended_shiftedBy2 = (extended_immediate<<2);//still need
+assign nextPC_branch = proceedingPC + extended_shiftedBy2;
+//assign selectorOfBranchMux = branch & zeroDetection;
 
-
-
+always@(branch or zeroDetection)
+	begin
+		selectorOfBranchMux = branch & zeroDetection;
+	end
+	
 
 
 ////////////////////////////////////////////////////////////////////////////////for stage 4///////////////////////////////////////////////////////////////////////////////////
@@ -288,7 +293,7 @@ assign MEM_WB_rt_IF_ID = MEM_WB_IR [20:16];
 assign MEM_WB_rd_IF_ID = MEM_WB_IR [15:11];              
 
 assign MEM_WB_rd=MEM_WB_IR[15:11];
-
+assign MEM_WB_rt=MEM_WB_IR[20:16];
 
 
 ////////////////////////////////////////////////////////////////////////////////end of blocking assignments /////////////////////////////////////////////
@@ -303,7 +308,7 @@ assign MEM_WB_rd=MEM_WB_IR[15:11];
 always @(posedge clk)
 
 begin
-
+//ID_EX_branch=branch;
 /////////////////////////////////////////////////////////////////////////pipeline assignments all with parrellel blocking/////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////// for stage 1//////////////////////////////////////////////////////////////
@@ -312,11 +317,14 @@ if(stallSignal)
 	
 	PC <=PC;
 	else
-		PC <=proceedingPC;	
+		PC <=nextPC;	
 
 
-$strobe($time,,"forwardSignalforRS=%b ",forwardSignalForRs); 
-$strobe($time,,"forwardSignalforRt=%b ",forwardSignalForRt);
+//$strobe($time,,"forwardSignalforRS=%b ",forwardSignalForRs); 
+//$strobe($time,,"forwardSignalforRt=%b ",forwardSignalForRt);
+//$strobe($time,,,"proceedingPC=%d,nextPC_branch=%d , selectorOfBranchMux=%d , nextPC=%d  zeroDetection=%d ID_EX_branch=%d branch=%d extended_immediate=%d",proceedingPC,nextPC_branch,selectorOfBranchMux,nextPC,zeroDetection,ID_EX_branch,branch,extended_immediate);
+//$strobe($time,,,"ID_EX_A=%d   Bin=%d",ID_EX_A,Bin);
+//$strobe($time,,"nextPC_branch=%d  proceedingPC=%d ID_EX_pc=%d extended_shiftedBy2=%d selectorOfBranchMux=%d",nextPC_branch,proceedingPC,ID_EX_pc,extended_shiftedBy2,selectorOfBranchMux);
 ///////////////////////////////////////////////////////////////// between stage 1 and 2 //////////////////////////////////////////////////////////
 if(stallSignal)
 	
@@ -338,7 +346,7 @@ ID_EX_pc  <= IF_ID_pc      ;
 
 ID_EX_regWrite<=  regWrite;       ID_EX_regDst  <=regDst;       //still need
 ID_EX_memWrite<=  memWrite;       ID_EX_memToReg<=memToReg;      ID_EX_memRead<=memRead;//stillneed     
-ID_EX_branch<=branch ;//die here
+//ID_EX_branch<=branch ;//die here
 ID_EX_aluOP   <=aluOP; 
 ID_EX_aluSrc <=aluSrc;//die here
 

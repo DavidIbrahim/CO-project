@@ -50,7 +50,7 @@ wire stallSignal;//if 1 then stall
 
 reg  [31:0]   IF_ID_IR  , IF_ID_pc  ;//in from inst and procceding pc
 wire[4:0]IF_ID_rs,IF_ID_rt;
-
+wire[4:0]IF_ID_rd;
 ///////////////////////////////////////////////////////////////////////////////////////////stage 2//////////////////////////////////////////////////////
 
 wire [1:0] aluOP;///////////control unit outputs
@@ -81,8 +81,9 @@ reg [31:0]   ID_EX_B     ;//in from the register file
 
 reg [31:0]   ID_EX_extended_immediate;//in from sign extended
 
-reg[4:0] ID_EX_rs;
-reg[4:0] ID_EX_rt;
+wire[4:0] ID_EX_rs;
+wire[4:0] ID_EX_rt;
+wire[4:0] ID_EX_rd;
  
 ////////////////////////////////////////////////////////////////////////////////////////////////for stage 3///////////////////////////////////////////////////
 
@@ -111,12 +112,12 @@ reg  [31:0]   EX_MEM_B ,  EX_MEM_ALUOut;
 reg     EX_MEM_regWrite,        EX_MEM_regDst ,
         EX_MEM_memWrite,        EX_MEM_memToReg,     EX_MEM_memRead       ;
 
- reg[3:0] EX_MEM_rd;
+ reg[4:0] EX_MEM_rd;
 /////////////////////////////////////////////////////////////////////////////////////////////for stage 4//////////////////////////////////////////////
 
 
 wire [31:0] readDataMemory ; // output of dataMemory
-reg[3:0]MEM_WB_rd;
+reg[4:0]MEM_WB_rd;
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 4 and 5/////////////////////////////////////////////
 
 
@@ -176,7 +177,7 @@ stallingControl sc1(memRead,IF_ID_rt,instruction[25:21],instruction[20:16],stall
 
 // also the branch is here 
 
-ForwardControl FC_rs(EX_MEM_regWrite,MEM_WB_regWrite,EX_MEM_rd,MEM_WB_rd,ID_EX_rs,forwardSignalForRs);//compare with rs
+ForwardControl FC_rs(ID_EX_regWrite,EX_MEM_regWrite,EX_MEM_rd,MEM_WB_rd,ID_EX_rs,forwardSignalForRs);//compare with rs	
 ForwardControl FC_rt(EX_MEM_regWrite,MEM_WB_regWrite,EX_MEM_rd,MEM_WB_rd,ID_EX_rt,forwardSignalForRt);//compare with rt
 Mux_32bits thirdMux( ID_EX_pc , nextPC_branch , selectorOfBranchMux , nextPC);	 // mux before pc
 
@@ -253,6 +254,7 @@ assign rs     = IF_ID_IR [25:21];//for regs
 assign rt     = IF_ID_IR [20:16];//for regs	 
 assign IF_ID_rs=IF_ID_IR [25:21];
 assign IF_ID_rt=IF_ID_IR [20:16];
+assign IF_ID_rd=IF_ID_IR [15:11];
 assign immediate_address =IF_ID_IR  [15:0];// for sign extend
 ///////////////////////////////////////////////////////////////////////////////for stage 3//////////////////////////////////////////////////////////////
 
@@ -261,6 +263,7 @@ assign shamt = ID_EX_IR [10:6];
 assign funct = ID_EX_IR [5:0];	   
 assign ID_EX_rs=ID_EX_IR [25:21];
 assign ID_EX_rt=ID_EX_IR [20:16];
+assign ID_EX_rd=ID_EX_IR [15:11];
 assign zeroDetection = ((ID_EX_A-Bin)==0)?1:0;
 
 //branch
@@ -275,7 +278,7 @@ assign selectorOfBranchMux = ID_EX_branch & zeroDetection;
 ////////////////////////////////////////////////////////////////////////////////for stage 4///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////nothing/////////////////////////////////////////////////////////////////////
 
-
+assign EX_MEM_rd = EX_MEM_IR[15:11];
 
 
 
@@ -284,6 +287,7 @@ assign selectorOfBranchMux = ID_EX_branch & zeroDetection;
 assign MEM_WB_rt_IF_ID = MEM_WB_IR [20:16]; 
 assign MEM_WB_rd_IF_ID = MEM_WB_IR [15:11];              
 
+assign MEM_WB_rd=MEM_WB_IR[15:11];
 
 
 
@@ -311,7 +315,8 @@ if(stallSignal)
 		PC <=proceedingPC;	
 
 
-
+$strobe($time,,"forwardSignalforRS=%b ",forwardSignalForRs); 
+$strobe($time,,"forwardSignalforRt=%b ",forwardSignalForRt);
 ///////////////////////////////////////////////////////////////// between stage 1 and 2 //////////////////////////////////////////////////////////
 if(stallSignal)
 	
@@ -353,7 +358,7 @@ ID_EX_extended_immediate<=extended_immediate;
 EX_MEM_IR <=ID_EX_IR;
 EX_MEM_pc <=ID_EX_pc;
 
-assign EX_MEM_rd = ID_EX_IR[15:11];
+
 
 EX_MEM_regWrite<=  ID_EX_regWrite;      EX_MEM_regDst<= ID_EX_regDst  ;   EX_MEM_memToReg<=  ID_EX_memToReg;    //still need
 EX_MEM_memWrite<=ID_EX_memWrite;          EX_MEM_memRead<= ID_EX_memRead;//die here
@@ -377,7 +382,7 @@ MEM_WB_regWrite<=EX_MEM_regWrite  ;      MEM_WB_regDst<=EX_MEM_regDst   ;   MEM_
 MEM_WB_ALUOut<=EX_MEM_ALUOut;
 MEM_WB_readDataMemory<=readDataMemory;
 
-assign MEM_WB_rd=EX_MEM_IR[15:11]; 
+ 
 
 ////////////////////////////////////////////////////////////// for stage 5////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////nothing/////////////////////////////////////////////////

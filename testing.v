@@ -1,6 +1,6 @@
 
-module RegisterFile(RR1,RR2,WR,WD,WE,Clk,Out1,Out2);
-
+module RegisterFile(RR1,RR2,WR,WD,WE,Clk,Out1,Out2,clk);
+input clk;
 input [4:0] RR1 , RR2 ;  // the address of the registers to read
 input [4:0] WR; // the address of the registers to write
 input signed [31:0]  WD;   // data to write
@@ -28,14 +28,16 @@ always @(RR1 , RR2)
 	Out2 <= registers[RR2];
     
 
+
 end
 
 
 
 //posedge clk
-always @(WE) //The register file should perform a write operation every clock cycle only if the ?write_enable? signal is set to true,
+always @(posedge clk) //The register file should perform a write operation every clock cycle only if the ?write_enable? signal is set to true,
 begin
 if(WE) 
+	//$display("aezft%d %d",WD,WR);
 	registers[WR] <= WD ;
 end
 	
@@ -306,7 +308,8 @@ end
 //Shift left logical op 14
 else if(Op == 4'b1110)
 begin
-Result <= (A<<ShiftCount);
+//$display("shift Entered%d",B);
+Result <= (B<<ShiftCount);
 //Overflow <= 0;
 end
 

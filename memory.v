@@ -15,7 +15,7 @@ initial
 				begin
 					IMemory[i]=0;
 				end									 
-		$readmemb("instructionMemory.txt",IMemory);	
+		$readmemb("EasyTesting.txt",IMemory);	
 end					
 
 always @(Pc)
@@ -52,9 +52,9 @@ initial
 				begin
 					DMemory[i]=0;
 				end		
-				$display("%b",DMemory[1]);
+			//	$display("%b",DMemory[1]);
 		$readmemb("DataMemory.txt",DMemory);		
-		$display("%b",DMemory[1]);
+	//$display("%b",DMemory[1]);
 end	
 always @(Address )
 begin			 
@@ -63,9 +63,10 @@ if (MemWrite)
 	DMemory[Address>>2] <= writeData ;  
 else   
 	begin						
-		//$display("mem Write=0,address=%b",Address>>2);
+
+		
 	ReadData <= DMemory[Address>>2] ; 	
-	//$display("ReadData=%b",ReadData);
+//	$display("ReadData=%b",ReadData);
 	end
 
 end

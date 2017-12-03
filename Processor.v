@@ -316,8 +316,8 @@ if(stallSignal)
 		PC <=proceedingPC;	
 
 
-$strobe($time,,"forwardSignalforRS=%b ",forwardSignalForRs); 
-$strobe($time,,"forwardSignalforRt=%b ",forwardSignalForRt);
+//$strobe($time,,"forwardSignalforRS=%b ",forwardSignalForRs); 
+//$strobe($time,,"forwardSignalforRt=%b ",forwardSignalForRt);
 ///////////////////////////////////////////////////////////////// between stage 1 and 2 //////////////////////////////////////////////////////////
 if(stallSignal)
 	

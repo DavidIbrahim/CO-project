@@ -261,7 +261,7 @@ begin
 if(Op == 4'b0010)
 begin
 Result <= (A+B);	 
-//$display($time,,"addition entered A=%d B=%d result=%d",A,B,Result);
+$strobe($time,,"addition entered A=%d B=%d result=%d",A,B,Result);
 // for overflow
 //if(A[31]==B[31] && A[31]== ~Result[31]) Overflow <= 1;
 //else Overflow <=0;

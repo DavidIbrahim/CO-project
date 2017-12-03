@@ -15,7 +15,7 @@ initial
 				begin
 					IMemory[i]=0;
 				end									 
-		$readmemb("EasyTesting.txt",IMemory);	
+		$readmemb("SimpleHazardTesting.txt",IMemory);	
 end					
 
 always @(Pc)

@@ -317,7 +317,7 @@ end
 //Shift right logical op 15
 else if(Op == 4'b1101)
 begin
-Result <= (A>>ShiftCount);
+Result <= (B>>ShiftCount);
 //Overflow <= 0;
 end
 

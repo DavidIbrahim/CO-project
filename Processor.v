@@ -83,15 +83,16 @@ reg [31:0]   ID_EX_extended_immediate;//in from sign extended
 
 wire[4:0] ID_EX_rs;
 wire[4:0] ID_EX_rt;
+
 wire[4:0] ID_EX_rd;
- 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////for stage 3///////////////////////////////////////////////////
 
 wire  [31:0] Bin; //Input to the main ALU
 wire  [4:0] shamt ;
 wire  [5:0]  funct ; // Access Instruction fields fields ////
 wire  [3:0]operation;//input to mainAlu and output from Alucontrol
-wire  [31:0] ALUResult;
+wire signed [31:0] ALUResult;
 
 
 wire  [31:0] extended_shiftedBy2; // output of signExtender after being shifted by 2 , used in beq
@@ -101,8 +102,8 @@ reg selectorOfBranchMux;
 reg branchSel;
 wire [1:0]forwardSignalForRs; 
 wire [1:0]forwardSignalForRt;
-wire [31:0]aluFirstInput;	
-wire [31:0]aluSecondInput;
+wire signed[31:0]aluFirstInput;	
+wire signed[31:0]aluSecondInput;
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 3 and 4////////////////////////////////////////////
 
 
@@ -112,12 +113,14 @@ reg  [31:0]   EX_MEM_B ,  EX_MEM_ALUOut;
 reg     EX_MEM_regWrite,        EX_MEM_regDst ,
         EX_MEM_memWrite,        EX_MEM_memToReg,     EX_MEM_memRead       ;
 
- reg[4:0] EX_MEM_rd;
+ wire[4:0] EX_MEM_rd;
 /////////////////////////////////////////////////////////////////////////////////////////////for stage 4//////////////////////////////////////////////
 
 
 wire [31:0] readDataMemory ; // output of dataMemory
 
+  
+wire[4:0]MEM_WB_rd;
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 4 and 5/////////////////////////////////////////////
 
 
@@ -133,7 +136,7 @@ wire[4:0]MEM_WB_rd;
 wire[4:0]MEM_WB_rt;
 ////////////////////////////////////////////////////////////////////////////////////////////for stage 5////////////////////////////////////////////////
 
-wire  [31:0]writeData;
+wire signed [31:0]writeData;
 wire  [4:0] writeRegister; // the address of the registers to write output of the mux
 
 wire  [4:0] MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID ; 
@@ -167,7 +170,7 @@ controlUnit mainControlUnit(opCode,stallSignal,regDst,branch,memRead,memToReg,al
 Mux_5bits firstMux( MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID , MEM_WB_regDst , writeRegister);  // mux before registerFile // fetch stage 
 
 
-RegisterFile registerFile(rs,rt,        writeRegister,writeData, MEM_WB_regWrite ,                  clk, Ain,readData2);// id stage
+RegisterFile registerFile(rs,rt,        writeRegister,writeData, MEM_WB_regWrite ,                  clk, Ain,readData2,clk);// id stage
 
 SignExtender signExtend(immediate_address ,extended_immediate);// before alu under the register file done //in the id stage	  
 
@@ -227,7 +230,10 @@ branchSel=0;
 selectorOfBranchMux=0;
 IF_ID_IR = no_op; ID_EX_IR = no_op; EX_MEM_IR = no_op; MEM_WB_IR = no_op; // put no-ops in pipeline registers 
 
-$monitor($time,,"PC = %d ,instruction=%h, ,rs=%d,rt=%d,Bin = %d Ain = %d,AluResult = %d ,memRead=%d", PC,instruction,rs,rt,Bin,Ain,ALUResult,memRead);
+
+$monitor($time,,"PC = %d , instruction=%h, ,rs=%d,rt=%d,Ain =%dBin = %d,AluResult = %d ,writeDataInMem=%d,writeDataInReg=%d", PC,instruction,rs,rt,aluFirstInput,aluSecondInput,ALUResult,EX_MEM_B,writeData);
+//$monitor($time,,"PC = %d , instruction=%h, ,rs=%d,rt=%d,Ain =%dBin = %d,AluResult = %d , MEM_WB_regWrite =%d,writeDataInReg=%d", PC,instruction,rs,rt,aluFirstInput,aluSecondInput,ALUResult, MEM_WB_regWrite ,writeData);
+
 
 //$strobe($time,,"PC = %d ,proceedingPC=%d,nextPC=%d nextPC_branch=%d , selectorOfBranchMux=%d",PC,proceedingPC,nextPC,nextPC_branch,selectorOfBranchMux);
 end
@@ -325,6 +331,7 @@ if(stallSignal)
 //$strobe($time,,,"proceedingPC=%d,nextPC_branch=%d , selectorOfBranchMux=%d , nextPC=%d  zeroDetection=%d ID_EX_branch=%d branch=%d extended_immediate=%d",proceedingPC,nextPC_branch,selectorOfBranchMux,nextPC,zeroDetection,ID_EX_branch,branch,extended_immediate);
 //$strobe($time,,,"ID_EX_A=%d   Bin=%d",ID_EX_A,Bin);
 //$strobe($time,,"nextPC_branch=%d  proceedingPC=%d ID_EX_pc=%d extended_shiftedBy2=%d selectorOfBranchMux=%d",nextPC_branch,proceedingPC,ID_EX_pc,extended_shiftedBy2,selectorOfBranchMux);
+
 ///////////////////////////////////////////////////////////////// between stage 1 and 2 //////////////////////////////////////////////////////////
 if(stallSignal)
 	

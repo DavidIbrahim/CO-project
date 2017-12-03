@@ -255,10 +255,11 @@ assign B_neg = - B;
 //Addition op 2
 always @(A or B or Op)
 begin
-
+//$display("always enterred");
 if(Op == 4'b0010)
 begin
-Result <= (A+B);
+Result <= (A+B);	 
+//$display($time,,"addition entered A=%d B=%d result=%d",A,B,Result);
 // for overflow
 //if(A[31]==B[31] && A[31]== ~Result[31]) Overflow <= 1;
 //else Overflow <=0;
@@ -347,4 +348,19 @@ output out;
 input in1,in2;	
 assign out = in1 & in2;
 
+endmodule 
+
+module Mux4To1_32bits(in1,in2,in3,in4,sel,out);
+
+	input[31:0] in1,in2,in3,in4;
+	input[1:0]sel;
+	output reg[31:0] out;	
+	always@(in1 or in2 or in3 or in4 or sel)
+		begin
+			if(sel==2'b00) out=in1;//0
+			else if(sel==2'b01) out=in2;//1
+			else if(sel==2'b10) out=in3;//2
+			else out=in4;//3
+		end
+			
 endmodule

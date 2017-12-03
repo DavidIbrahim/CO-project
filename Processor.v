@@ -92,7 +92,7 @@ wire  [31:0] Bin; //Input to the main ALU
 wire  [4:0] shamt ;
 wire  [5:0]  funct ; // Access Instruction fields fields ////
 wire  [3:0]operation;//input to mainAlu and output from Alucontrol
-wire  [31:0] ALUResult;
+wire signed [31:0] ALUResult;
 
 
 wire  [31:0] extended_shiftedBy2; // output of signExtender after being shifted by 2 , used in beq
@@ -102,8 +102,8 @@ wire selectorOfBranchMux;
 
 wire [1:0]forwardSignalForRs; 
 wire [1:0]forwardSignalForRt;
-wire [31:0]aluFirstInput;	
-wire [31:0]aluSecondInput;
+wire signed[31:0]aluFirstInput;	
+wire signed[31:0]aluSecondInput;
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 3 and 4////////////////////////////////////////////
 
 
@@ -134,7 +134,7 @@ reg[31:0] MEM_WB_ALUOut ,  MEM_WB_readDataMemory ;
 
 ////////////////////////////////////////////////////////////////////////////////////////////for stage 5////////////////////////////////////////////////
 
-wire  [31:0]writeData;
+wire signed [31:0]writeData;
 wire  [4:0] writeRegister; // the address of the registers to write output of the mux
 
 wire  [4:0] MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID ; 

@@ -81,8 +81,8 @@ reg [31:0]   ID_EX_B     ;//in from the register file
 
 reg [31:0]   ID_EX_extended_immediate;//in from sign extended
 
-reg[4:0] ID_EX_rs;
-reg[4:0] ID_EX_rt;
+wire[4:0] ID_EX_rs;
+wire[4:0] ID_EX_rt;
  
 ////////////////////////////////////////////////////////////////////////////////////////////////for stage 3///////////////////////////////////////////////////
 
@@ -111,12 +111,12 @@ reg  [31:0]   EX_MEM_B ,  EX_MEM_ALUOut;
 reg     EX_MEM_regWrite,        EX_MEM_regDst ,
         EX_MEM_memWrite,        EX_MEM_memToReg,     EX_MEM_memRead       ;
 
- reg[3:0] EX_MEM_rd;
+ reg[4:0] EX_MEM_rd;
 /////////////////////////////////////////////////////////////////////////////////////////////for stage 4//////////////////////////////////////////////
 
 
 wire [31:0] readDataMemory ; // output of dataMemory
-reg[3:0]MEM_WB_rd;
+reg[4:0]MEM_WB_rd;
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 4 and 5/////////////////////////////////////////////
 
 
@@ -166,7 +166,7 @@ controlUnit mainControlUnit(opCode,stallSignal,regDst,branch,memRead,memToReg,al
 Mux_5bits firstMux( MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID , MEM_WB_regDst , writeRegister);  // mux before registerFile // fetch stage 
 
 
-RegisterFile registerFile(rs,rt,        writeRegister,writeData, MEM_WB_regWrite ,                  clk, Ain,readData2);// id stage
+RegisterFile registerFile(rs,rt,        writeRegister,writeData, MEM_WB_regWrite ,                  clk, Ain,readData2,clk);// id stage
 
 SignExtender signExtend(immediate_address ,extended_immediate);// before alu under the register file done //in the id stage	  
 
@@ -224,8 +224,8 @@ PC = 0;
 
 IF_ID_IR = no_op; ID_EX_IR = no_op; EX_MEM_IR = no_op; MEM_WB_IR = no_op; // put no-ops in pipeline registers 
 
-$monitor($time,,"PC = %d , instruction=%h, ,rs=%d,rt=%d,Bin = %d Ain = %d,AluResult = %d ,memRead=%d", PC,instruction,rs,rt,Bin,Ain,ALUResult,memRead);
-
+$monitor($time,,"PC = %d , instruction=%h, ,rs=%d,rt=%d,Ain =%dBin = %d,AluResult = %d ,writeDataInMem=%d,writeDataInReg=%d", PC,instruction,rs,rt,aluFirstInput,aluSecondInput,ALUResult,EX_MEM_B,writeData);
+//$monitor($time,,"PC = %d , instruction=%h, ,rs=%d,rt=%d,Ain =%dBin = %d,AluResult = %d , MEM_WB_regWrite =%d,writeDataInReg=%d", PC,instruction,rs,rt,aluFirstInput,aluSecondInput,ALUResult, MEM_WB_regWrite ,writeData);
 
 end
 

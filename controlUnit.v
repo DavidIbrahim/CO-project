@@ -41,7 +41,7 @@ module controlUnit(opCode,stallSignal,regDst,branch,memRead,memToReg,aluOp,memWr
 					memWrite <=0;
 					branch<=0;
 					aluOp<=00;
-					$display("The instruction is load word memRead=%d",memRead);
+					//$display("The instruction is load word memRead=%d",memRead);
 				end	
 			else if(opCode==43)//sw
 				begin

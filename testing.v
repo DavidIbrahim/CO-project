@@ -21,7 +21,7 @@ begin
 		end				
 end
 // * //any change
-always @(RR1 , RR2)
+always @(negedge clk)
  begin
 	
 	Out1 <= registers[RR1]; 

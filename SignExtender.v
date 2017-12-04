@@ -3,7 +3,7 @@ module SignExtender(input signed [15:0]in ,output reg signed [31:0]out);
 		begin
 			out<=0;
 		end
-	always@(in)
+	always@*
 		begin				   
 			out={{16{in[15]}},in[15:0]};
 			//out[15:0]=[15:0]in;	
@@ -18,7 +18,7 @@ module SignExtenderTestBench;
 	SignExtender s1(numberToExtend,extendedNumber);
 	initial
 		begin
-			$monitor($time,,,"numberToExtend=%d extendedNumber=%d",numberToExtend,extendedNumber);
+			//$monitor($time,"numberToExtend=%d extendedNumber=%d",numberToExtend,extendedNumber);
 			numberToExtend=16'b0111111111111111;
 			#10
 			numberToExtend=16'b1111110111111111;

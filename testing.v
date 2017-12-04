@@ -21,11 +21,17 @@ begin
 		end				
 end
 // * //any change
-always @(RR1 , RR2)
+always @*
  begin
 	
+	 if(WE) 
+	registers[WR] <= WD ;
+	 
+else  
+	begin
 	Out1 <= registers[RR1]; 
-	Out2 <= registers[RR2];
+	Out2 <= registers[RR2];	 
+	end
     
 
 end
@@ -33,11 +39,11 @@ end
 
 
 //posedge clk
-always @(WE) //The register file should perform a write operation every clock cycle only if the ?write_enable? signal is set to true,
+/*always @(WE) //The register file should perform a write operation every clock cycle only if the ?write_enable? signal is set to true,
 begin
 if(WE) 
 	registers[WR] <= WD ;
-end
+end	   */
 	
 
 endmodule
@@ -53,6 +59,7 @@ reg Mux_Ctrl;
 wire signed [31:0] Out1 , Out2 ; 
 wire signed [31:0] ALUResult;
 wire signed [31:0] DataToWrite;
+wire overflow;
 reg [0:4]op;
 
 OurALU z(ALUResult,overflow,Out1,Out2,op,ShiftCount);
@@ -61,9 +68,9 @@ RegisterFile s(RR1,RR2,WR,DataToWrite,WE,Clk,Out1,Out2);
 
 initial
 begin
-$monitor($time ,, " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d Zero : %d",Clk,Out1,Out2,ALUResult,DataToWrite,overflow);
+//$monitor($time , " %b  ReadData1 :%d ReadData2 :%d AluResult :%d DataToWrite : %d Zero : %d",Clk,Out1,Out2,ALUResult,DataToWrite,overflow);
 
-$display("       //put -2 in register 0 and read data from reg (0&1) ");
+//$display("       //put -2 in register 0 and read data from reg (0&1) ");
 #5
 Mux_Ctrl=0;
 
@@ -204,27 +211,12 @@ input [31:0] in1,in2;
 input sel;
 output reg [31:0] out ;
 
-always @ (in1 or in2 or sel)
+always @*
 begin
 if(sel ==1'b0)   out = in1 ; // 0
 else             out = in2 ; // 1
 end
 
-endmodule
-
-module Mux4To1_32bits(in1,in2,in3,in4,sel,out);
-
-	input[31:0] in1,in2,in3,in4;
-	input[1:0]sel;
-	output reg[31:0] out;	
-	always@(in1 or in2 or in3 or in4 or sel)
-		begin
-			if(sel==2'b00) out=in1;//0
-			else if(sel==2'b01) out=in2;//1
-			else if(sel==2'b10) out=in3;//2
-			else out=in4;//3
-		end
-			
 endmodule
 
 
@@ -236,7 +228,7 @@ wire [31:0]out;
 
 initial
 begin
-$monitor("%d %d %d %b",out,in1,in2,sel);
+//$monitor("%d %d %d %b",out,in1,in2,sel);
 #1
 in1 = 5;
 in2 =6;
@@ -268,12 +260,13 @@ assign B_neg = - B;
 //assign zeroDetection = (A==B)? 1:0 ;
 
 //Addition op 2
-always @(A or B or Op)
+always @*
 begin
-
+//$display("always enterred");
 if(Op == 4'b0010)
 begin
-Result <= (A+B);
+Result <= (A+B);	 
+//$strobe($time,,"addition entered A=%d B=%d result=%d",A,B,Result);
 // for overflow
 //if(A[31]==B[31] && A[31]== ~Result[31]) Overflow <= 1;
 //else Overflow <=0;
@@ -349,7 +342,7 @@ else if(Op == 4'b0111)
   if(A<B) Result = 1; 
 	else Result = 0;
 else
-Result = 31'bz;
+Result = 31'b0;
 // this to make it not dependent on a clock and synthis the code later
 end 
 
@@ -362,4 +355,19 @@ output out;
 input in1,in2;	
 assign out = in1 & in2;
 
+endmodule 
+
+module Mux4To1_32bits(in1,in2,in3,in4,sel,out);
+
+	input[31:0] in1,in2,in3,in4;
+	input[1:0]sel;
+	output reg[31:0] out;	
+	always@*
+		begin
+			if(sel==2'b00) out=in1;//0
+			else if(sel==2'b01) out=in2;//1
+			else if(sel==2'b10) out=in3;//2
+			else out=in4;//3
+		end
+			
 endmodule

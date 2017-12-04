@@ -64,7 +64,9 @@ wire  [31:0] Ain;
 wire  [31:0]readData2; // output of fileregister and input to through the pipeline the second mux
 wire  [31:0]extended_immediate; // output of signExtension
 wire  [15:0]immediate_address;// Access Instruction fields fields
-
+wire [1:0]branchForwardSignalForRs;	 
+wire [1:0]branchForwardSignalForRt;	
+wire stallSignalForBranch;
 /////////////////////////////////////////////////////////////////////////////////////// between stage 2 and 3//////////////////////////////////////////////////
 
 reg [31:0]   ID_EX_IR  , ID_EX_pc;//in from last pipeline reg
@@ -84,7 +86,7 @@ reg [31:0]   ID_EX_extended_immediate;//in from sign extended
 wire[4:0] ID_EX_rs;
 wire[4:0] ID_EX_rt;
 wire[4:0] ID_EX_rd;
- 
+wire[5:0] ID_EX_Opcode; 
 ////////////////////////////////////////////////////////////////////////////////////////////////for stage 3///////////////////////////////////////////////////
 
 wire  [31:0] Bin; //Input to the main ALU
@@ -97,6 +99,8 @@ wire  [31:0] ALUResult;
 wire  [31:0] extended_shiftedBy2; // output of signExtender after being shifted by 2 , used in beq
 wire  [31:0] nextPC_branch; // this  is the new address of pc if the instruction is beq
 wire zeroDetection;
+wire[31:0] branch_rs;
+wire[31:0] branch_rt;
 reg selectorOfBranchMux;  
 reg branchSel;
 wire [1:0]forwardSignalForRs; 
@@ -111,8 +115,9 @@ reg  [31:0]   EX_MEM_B ,  EX_MEM_ALUOut;
 
 reg     EX_MEM_regWrite,        EX_MEM_regDst ,
         EX_MEM_memWrite,        EX_MEM_memToReg,     EX_MEM_memRead       ;
-
- reg[4:0] EX_MEM_rd;
+ wire [4:0]EX_MEM_rt;
+ wire [4:0] EX_MEM_rd;
+ wire[5:0]EX_MEM_Opcode;
 /////////////////////////////////////////////////////////////////////////////////////////////for stage 4//////////////////////////////////////////////
 
 
@@ -179,6 +184,12 @@ stallingControl sc1(memRead,IF_ID_rt,instruction[25:21],instruction[20:16],stall
 
 ForwardControl FC_rs(EX_MEM_regWrite,MEM_WB_regWrite,EX_MEM_rd,MEM_WB_rd,MEM_WB_rt,ID_EX_rs,forwardSignalForRs);//compare with rs	
 ForwardControl FC_rt(EX_MEM_regWrite,MEM_WB_regWrite,EX_MEM_rd,MEM_WB_rd,MEM_WB_rt,ID_EX_rt,forwardSignalForRt);//compare with rt
+ForwardControl Branch_rs(EX_MEM_regWrite,MEM_WB_regWrite,IF_ID_rd,EX_MEM_rd,MEM_WB_rt,IF_ID_rs,branchForwardSignalForRs);
+ForwardControl Branch_rt(EX_MEM_regWrite,MEM_WB_regWrite,IF_ID_rd,EX_MEM_rd,MEM_WB_rt,IF_ID_rt,branchForwardSignalForRt);
+Mux4To1_32bits branch_rs_Dst(Ain,Ain,MEM_WB_ALUOut,writeData,branchForwardSignalForRs,branch_rs);	
+Mux4To1_32bits branch_rt_Dst(readData2,MEM_WB_ALUOut,readData2,readData2,branchForwardSignalForRt,branch_rt);
+StallControlBranch stallforbranch(ID_EX_memRead,instruction[31:26],opCode,ID_EX_Opcode,ID_EX_rt,instruction[25:21],instruction[20:16],IF_ID_rd,ID_EX_rd,stallSignalForBranch);
+
 Mux_32bits thirdMux( proceedingPC , nextPC_branch , selectorOfBranchMux , nextPC);	 // mux before pc
 
 Mux_32bits secondMux( ID_EX_B , ID_EX_extended_immediate , ID_EX_aluSrc ,  Bin);	 // mux before ALU
@@ -266,7 +277,9 @@ assign funct = ID_EX_IR [5:0];
 assign ID_EX_rs=ID_EX_IR [25:21];
 assign ID_EX_rt=ID_EX_IR [20:16];
 assign ID_EX_rd=ID_EX_IR [15:11];
-assign zeroDetection = ((ID_EX_A-Bin)==0)?1:0;
+assign ID_EX_Opcode=ID_EX_IR [31:26];
+//assign zeroDetection = ((ID_EX_A-Bin)==0)?1:0;
+assign zeroDetection = ((branch_rs-branch_rt)==0)?1:0;
 
 //branch
 assign extended_shiftedBy2 = (extended_immediate<<2);//still need
@@ -284,8 +297,8 @@ always@(branch or zeroDetection)
 ///////////////////////////////////////////////////////////////////////nothing/////////////////////////////////////////////////////////////////////
 
 assign EX_MEM_rd = EX_MEM_IR[15:11];
-
-
+assign EX_MEM_rt = EX_MEM_IR[20:16];
+assign EX_MEM_Opcode=EX_MEM_IR[31:26];
 
 
 //////////////////////////////////////////////////////////////////////////////for stage 5/////////////////////////////////////////////////////////////
@@ -313,9 +326,14 @@ begin
 
 //////////////////////////////////////////////////////////////////////////// for stage 1//////////////////////////////////////////////////////////////
 //PC <=nextPC; 
-if(stallSignal)
+if(stallSignal || stallSignalForBranch)
 	
 	PC <=PC;
+/*else if( (branchForwardSignalForRs==01) || (branchForwardSignalForRs==10) || (branchForwardSignalForRt==01) || (branchForwardSignalForRt==10) )
+	begin
+	PC<=PC;
+	//$strobe($time,,"branchForwardSignalForRs=%b branchForwardSignalForRt=%b",branchForwardSignalForRs,branchForwardSignalForRt);	
+	end	   */
 	else
 		PC <=nextPC;	
 
@@ -323,12 +341,21 @@ if(stallSignal)
 //$strobe($time,,"forwardSignalforRS=%b ",forwardSignalForRs); 
 //$strobe($time,,"forwardSignalforRt=%b ",forwardSignalForRt);
 //$strobe($time,,,"proceedingPC=%d,nextPC_branch=%d , selectorOfBranchMux=%d , nextPC=%d  zeroDetection=%d ID_EX_branch=%d branch=%d extended_immediate=%d",proceedingPC,nextPC_branch,selectorOfBranchMux,nextPC,zeroDetection,ID_EX_branch,branch,extended_immediate);
-//$strobe($time,,,"ID_EX_A=%d   Bin=%d",ID_EX_A,Bin);
+$strobe($time,,,"branch_rs=%d   branch_rt=%d",branch_rs,branch_rt);
+$strobe($time,,"branchForwardSignalForRs=%b branchForwardSignalForRt=%b",branchForwardSignalForRs,branchForwardSignalForRt); 
+$strobe($time,,"readDataMemory=%d",readDataMemory);
 //$strobe($time,,"nextPC_branch=%d  proceedingPC=%d ID_EX_pc=%d extended_shiftedBy2=%d selectorOfBranchMux=%d",nextPC_branch,proceedingPC,ID_EX_pc,extended_shiftedBy2,selectorOfBranchMux);
 ///////////////////////////////////////////////////////////////// between stage 1 and 2 //////////////////////////////////////////////////////////
-if(stallSignal)
-	
+//$display($time,,"selectorOfBranchMux=%d",selectorOfBranchMux);
+if(stallSignal ||stallSignalForBranch || selectorOfBranchMux)
+	begin			
+	$display($time,,"stallSignal=%d",stallSignal);
+	$display($time,,"stallSignalForBranch=%d",stallSignalForBranch); 
+	$display($time,,"selectorOfBranchMux=%d",selectorOfBranchMux);
 	IF_ID_IR<=32'b0;
+	end
+/*else if( (branchForwardSignalForRs==01) || (branchForwardSignalForRs==10) || (branchForwardSignalForRt==01) || (branchForwardSignalForRt==10) )
+	IF_ID_IR<=32'b0;*/
 	else
 		IF_ID_IR<=instruction;		  
 //IF_ID_IR<=instruction;//from the inst memory

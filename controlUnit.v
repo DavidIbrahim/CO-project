@@ -113,4 +113,30 @@ module controlUnitTestBench;
 		end
 		
 			
-	endmodule
+endmodule
+
+
+module control_sw  (   EX_MEM_memWrite        , MEM_WB_regWrite     ,  
+ EX_MEM_IR_rt   , writeRegister   , 
+ Lw_add_SW_hazzard_control_line_mux  );   
+
+
+input wire EX_MEM_memWrite ;// if i am equal 1 then i am sw
+input wire MEM_WB_regWrite ;// if i am equal 1 then i am lw or add
+input wire [4:0]   EX_MEM_IR_rt  , writeRegister  ; // if we are equal then i want to write on a register on inst 1 which i also want to store the data that is stored in on inst 2 
+//so this will create an hazzard as i didn't write on this address the data that i just added or loaded from the memory 
+//so we make forwarding from the memout to the memin (put the value of mux equal 1 ) 
+output reg Lw_add_SW_hazzard_control_line_mux ;
+
+always@(  EX_MEM_memWrite or MEM_WB_regWrite or EX_MEM_IR_rt or    writeRegister    )
+begin 
+
+if(              (  EX_MEM_IR_rt ==  writeRegister) &&  (MEM_WB_regWrite==1)   && ( EX_MEM_memWrite == 1)  && (writeRegister!=0)       )
+Lw_add_SW_hazzard_control_line_mux = 1 ;
+else
+Lw_add_SW_hazzard_control_line_mux=0 ;
+
+end	
+endmodule
+	
+

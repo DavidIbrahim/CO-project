@@ -17,12 +17,12 @@ module ForwardControl(EX_MEM_regWrite,MEM_WB_regWrite,EX_MEM_rd,MEM_WB_rd,MEM_WB
 				begin
 					forwardSignal<=10;//memory hazard
 
-					//$display($time,,"memory hazard");
+					$display($time,,"memory hazard");
 				end
 			else if( (MEM_WB_rt==regNoToCompareWz)&& MEM_WB_regWrite && (MEM_WB_rt!=0) )		   
 				begin
 					forwardSignal<=11;//lw hazard
-					//$display($time,,"load hazard");
+					$display($time,,"load hazard");
 				end
 				
 

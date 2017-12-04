@@ -125,12 +125,11 @@ reg     EX_MEM_regWrite,        EX_MEM_regDst ,
 
 
 wire [31:0] readDataMemory ; // output of dataMemory
+wire [31:0] lw_sw_hazard_input_data_to_Dmemory ; 
+wire   Lw_SW_hazzard_control_line          ;
 
-  
-wire[4:0]MEM_WB_rd;
+
 //////////////////////////////////////////////////////////////////////////////////////////// between stage 4 and 5/////////////////////////////////////////////
-
-
 reg[31:0]   MEM_WB_IR , MEM_WB_pc;
 
 reg    MEM_WB_regWrite,        MEM_WB_regDst , MEM_WB_memToReg ;
@@ -208,7 +207,12 @@ ALUControl aluControlUnit(operation, ID_EX_aluOP, funct);// alu control unit
 
 //for stage 4
 
-DataMem DMemory(         EX_MEM_ALUOut ,                EX_MEM_B ,          EX_MEM_memRead ,              EX_MEM_memWrite  ,clk , readDataMemory ); //Data Memory//mem
+control_sw     SW_hazzard_control_unit  (   EX_MEM_memWrite        ,       MEM_WB_regWrite     ,   EX_MEM_rt 
+, writeRegister   ,         Lw_SW_hazzard_control_line            );   
+
+Mux_32bits   lw_sw_hazard_mux   (     EX_MEM_B           ,     MEM_WB_readDataMemory          ,      Lw_SW_hazzard_control_line             ,              lw_sw_hazard_input_data_to_Dmemory        );
+
+DataMem DMemory(         EX_MEM_ALUOut ,           lw_sw_hazard_input_data_to_Dmemory ,          EX_MEM_memRead ,              EX_MEM_memWrite  ,clk , readDataMemory ); //Data Memory//mem
 
 //for stage 5
 
@@ -349,18 +353,18 @@ if(stallSignal || stallSignalForBranch)
 //$strobe($time,,"forwardSignalforRS=%b ",forwardSignalForRs); 
 //$strobe($time,,"forwardSignalforRt=%b ",forwardSignalForRt);
 //$strobe($time,,,"proceedingPC=%d,nextPC_branch=%d , selectorOfBranchMux=%d , nextPC=%d  zeroDetection=%d ID_EX_branch=%d branch=%d extended_immediate=%d",proceedingPC,nextPC_branch,selectorOfBranchMux,nextPC,zeroDetection,ID_EX_branch,branch,extended_immediate);
-$strobe($time,,,"branch_rs=%d   branch_rt=%d",branch_rs,branch_rt);
-$strobe($time,,"branchForwardSignalForRs=%b branchForwardSignalForRt=%b",branchForwardSignalForRs,branchForwardSignalForRt); 
-$strobe($time,,"readDataMemory=%d",readDataMemory);
+//$strobe($time,,,"branch_rs=%d   branch_rt=%d",branch_rs,branch_rt);
+//$strobe($time,,"branchForwardSignalForRs=%b branchForwardSignalForRt=%b",branchForwardSignalForRs,branchForwardSignalForRt); 
+//$strobe($time,,"readDataMemory=%d",readDataMemory);
 //$strobe($time,,"nextPC_branch=%d  proceedingPC=%d ID_EX_pc=%d extended_shiftedBy2=%d selectorOfBranchMux=%d",nextPC_branch,proceedingPC,ID_EX_pc,extended_shiftedBy2,selectorOfBranchMux);
 
 ///////////////////////////////////////////////////////////////// between stage 1 and 2 //////////////////////////////////////////////////////////
 //$display($time,,"selectorOfBranchMux=%d",selectorOfBranchMux);
 if(stallSignal ||stallSignalForBranch || selectorOfBranchMux)
 	begin			
-	$display($time,,"stallSignal=%d",stallSignal);
-	$display($time,,"stallSignalForBranch=%d",stallSignalForBranch); 
-	$display($time,,"selectorOfBranchMux=%d",selectorOfBranchMux);
+	//$display($time,,"stallSignal=%d",stallSignal);
+	//$display($time,,"stallSignalForBranch=%d",stallSignalForBranch); 
+	//$display($time,,"selectorOfBranchMux=%d",selectorOfBranchMux);
 	IF_ID_IR<=32'b0;
 	end
 /*else if( (branchForwardSignalForRs==01) || (branchForwardSignalForRs==10) || (branchForwardSignalForRt==01) || (branchForwardSignalForRt==10) )

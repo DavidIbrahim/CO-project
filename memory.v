@@ -1,8 +1,8 @@
 
-module InstMem(Pc,Clk,InstReg);
+module InstMem(Pc,InstReg);
 
 input [31:0] Pc ;  // program counter to identify which inst
-input  Clk; // same for all of the program
+//input  Clk; // same for all of the program
 
 output reg [31:0] InstReg ; //  the inst that coincides with that pc number 
 

@@ -1,11 +1,11 @@
 
-module RegisterFile(RR1,RR2,WR,WD,WE,Clk,Out1,Out2,clk);
+module RegisterFile(RR1,RR2,WR,WD,WE,Out1,Out2,clk);
 input clk;
 input [4:0] RR1 , RR2 ;  // the address of the registers to read
 input [4:0] WR; // the address of the registers to write
 input signed [31:0]  WD;   // data to write
 input WE;    		//write enable
-input Clk; 		
+//input Clk; 		
 
 output reg signed [31:0] Out1 , Out2 ;  // output of reading register 1 and reading register 2
 
@@ -59,7 +59,7 @@ reg [0:4]op;
 
 OurALU z(ALUResult,overflow,Out1,Out2,op,ShiftCount);
 Mux_32bits a (WD,ALUResult,Mux_Ctrl,DataToWrite);
-RegisterFile s(RR1,RR2,WR,DataToWrite,WE,Clk,Out1,Out2);
+RegisterFile s(RR1,RR2,WR,DataToWrite,WE,Out1,Out2,Clk);
 
 initial
 begin

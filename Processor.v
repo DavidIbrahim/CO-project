@@ -168,7 +168,7 @@ wire  [4:0] MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID ;
 
 // also the adder of proceding pc is here
 
-InstMem  IMemory(PC,clk,instruction);//in the fetch stage
+InstMem  IMemory(PC,instruction);//in the fetch stage
 
 //for stage 2
 

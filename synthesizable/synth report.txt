@@ -1,0 +1,363 @@
+10.23. Printing statistics.
+
+=== ALUControl ===
+
+   Number of wires:                 61
+   Number of wire bits:             73
+   Number of public wires:           3
+   Number of public wire bits:      12
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 65
+     $_AND_                          7
+     $_AOI3_                         5
+     $_AOI4_                         1
+     $_DLATCH_P_                     4
+     $_MUX_                          2
+     $_NAND_                        12
+     $_NOR_                         16
+     $_NOT_                          6
+     $_OAI3_                         2
+     $_OR_                          10
+
+=== ALUControlTB ===
+
+   Number of wires:                  0
+   Number of wire bits:              0
+   Number of public wires:           0
+   Number of public wire bits:       0
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== AndGate_1bit ===
+
+   Number of wires:                  3
+   Number of wire bits:              3
+   Number of public wires:           3
+   Number of public wire bits:       3
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  1
+     $_AND_                          1
+
+=== CPU ===
+
+   Number of wires:                  1
+   Number of wire bits:              1
+   Number of public wires:           1
+   Number of public wire bits:       1
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== ClkGen ===
+
+   Number of wires:                  1
+   Number of wire bits:              1
+   Number of public wires:           1
+   Number of public wire bits:       1
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== DataMem ===
+
+   Number of wires:              37152
+   Number of wire bits:          69020
+   Number of public wires:        1030
+   Number of public wire bits:   32867
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              68953
+     $_AND_                       2054
+     $_AOI4_                     16352
+     $_DLATCH_P_                 32800
+     $_MUX_                         32
+     $_NAND_                     11255
+     $_NOR_                       6388
+     $_NOT_                         39
+     $_OAI3_                        32
+     $_OR_                           1
+
+=== ForwardControl ===
+
+   Number of wires:                 65
+   Number of wire bits:             82
+   Number of public wires:           7
+   Number of public wire bits:      24
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 60
+     $_AOI3_                         4
+     $_AOI4_                         5
+     $_NAND_                         3
+     $_NOR_                          5
+     $_NOT_                         15
+     $_OAI3_                         6
+     $_OAI4_                         8
+     $_OR_                          14
+
+=== InstMem ===
+
+   Number of wires:                  2
+   Number of wire bits:             64
+   Number of public wires:           2
+   Number of public wire bits:      64
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== Mux4To1_32bits ===
+
+   Number of wires:                 74
+   Number of wire bits:            230
+   Number of public wires:           6
+   Number of public wire bits:     162
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                100
+     $_MUX_                         96
+     $_NAND_                         1
+     $_NOT_                          1
+     $_OR_                           2
+
+=== MuxTestBench ===
+
+   Number of wires:                  0
+   Number of wire bits:              0
+   Number of public wires:           0
+   Number of public wire bits:       0
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== Mux_32bits ===
+
+   Number of wires:                  4
+   Number of wire bits:             97
+   Number of public wires:           4
+   Number of public wire bits:      97
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 32
+     $_MUX_                         32
+
+=== Mux_5bits ===
+
+   Number of wires:                  4
+   Number of wire bits:             16
+   Number of public wires:           4
+   Number of public wire bits:      16
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  5
+     $_MUX_                          5
+
+=== OurALU ===
+
+   Number of wires:               1269
+   Number of wire bits:           1369
+   Number of public wires:           6
+   Number of public wire bits:     106
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1295
+     $_AND_                         79
+     $_AOI3_                        70
+     $_AOI4_                        15
+     $_MUX_                        576
+     $_NAND_                        90
+     $_NOR_                         66
+     $_NOT_                        194
+     $_OAI3_                        41
+     $_OAI4_                        32
+     $_OR_                          37
+     $_XNOR_                        74
+     $_XOR_                         21
+
+=== RegisterFile ===
+
+   Number of wires:               3105
+   Number of wire bits:           4202
+   Number of public wires:          41
+   Number of public wire bits:    1138
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               4152
+     $_AND_                          1
+     $_DFF_N_                       64
+     $_DFF_P_                     1024
+     $_MUX_                       3008
+     $_NAND_                        35
+     $_NOR_                         12
+     $_NOT_                          4
+     $_OR_                           4
+
+=== SignExtender ===
+
+   Number of wires:                  2
+   Number of wire bits:             48
+   Number of public wires:           2
+   Number of public wire bits:      48
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== SignExtenderTestBench ===
+
+   Number of wires:                  0
+   Number of wire bits:              0
+   Number of public wires:           0
+   Number of public wire bits:       0
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== StallControlBranch ===
+
+   Number of wires:                 57
+   Number of wire bits:             92
+   Number of public wires:          10
+   Number of public wire bits:      45
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 48
+     $_AOI4_                         2
+     $_NAND_                         8
+     $_NOR_                         14
+     $_NOT_                          1
+     $_OAI4_                         1
+     $_OR_                           2
+     $_XNOR_                         8
+     $_XOR_                         12
+
+=== controlUnit ===
+
+   Number of wires:                 31
+   Number of wire bits:             37
+   Number of public wires:           9
+   Number of public wire bits:      15
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 29
+     $_AND_                          2
+     $_AOI3_                         1
+     $_NAND_                         6
+     $_NOR_                          7
+     $_NOT_                          4
+     $_OR_                           9
+
+=== controlUnitTestBench ===
+
+   Number of wires:                  0
+   Number of wire bits:              0
+   Number of public wires:           0
+   Number of public wire bits:       0
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== control_sw ===
+
+   Number of wires:                 26
+   Number of wire bits:             34
+   Number of public wires:           5
+   Number of public wire bits:      13
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 22
+     $_AND_                          2
+     $_AOI3_                         1
+     $_AOI4_                         2
+     $_NAND_                         2
+     $_NOR_                          3
+     $_NOT_                          7
+     $_OAI3_                         2
+     $_OAI4_                         2
+     $_OR_                           1
+
+=== cpuTestBench ===
+
+   Number of wires:                  0
+   Number of wire bits:              0
+   Number of public wires:           0
+   Number of public wire bits:       0
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== project1TestBench ===
+
+   Number of wires:                  0
+   Number of wire bits:              0
+   Number of public wires:           0
+   Number of public wire bits:       0
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  0
+
+=== stallingControl ===
+
+   Number of wires:                 23
+   Number of wire bits:             35
+   Number of public wires:           5
+   Number of public wire bits:      17
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 19
+     $_AOI4_                         1
+     $_NAND_                         2
+     $_NOR_                          5
+     $_NOT_                          1
+     $_XNOR_                         4
+     $_XOR_                          6
+
+10.24. Executing CHECK pass (checking for obvious problems).
+checking module ALUControl..
+checking module ALUControlTB..
+checking module AndGate_1bit..
+checking module CPU..
+checking module ClkGen..
+checking module DataMem..
+checking module ForwardControl..
+checking module InstMem..
+checking module Mux4To1_32bits..
+checking module MuxTestBench..
+checking module Mux_32bits..
+checking module Mux_5bits..
+checking module OurALU..
+checking module RegisterFile..
+checking module SignExtender..
+checking module SignExtenderTestBench..
+checking module StallControlBranch..
+checking module controlUnit..
+checking module controlUnitTestBench..
+checking module control_sw..
+checking module cpuTestBench..
+checking module project1TestBench..
+checking module stallingControl..
+found and reported 0 problems.

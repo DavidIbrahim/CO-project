@@ -5,7 +5,7 @@ input [1:0] ALUOp;
 input [5:0] funct;
 
 parameter AND=4'b0000 , OR= 4'b0001 , ADD= 4'b0010,
-          SUB= 4'b0110, SLT= 4'b0111, NOR= 4'b1100, SLL= 4'b1110;
+          SUB= 4'b0110,  NOR= 4'b1100, SLL= 4'b1110 ,SRL = 4'b1101,SLT=4'b0111;
 
 
 always@ (ALUOp or funct)
@@ -27,7 +27,8 @@ if(funct == 34) Op <= SUB;
 if(funct == 42) Op <= SLT;
 if(funct == 39) Op <= NOR;
 if(funct == 0 ) Op <= SLL;
-
+if(funct == 2) Op <= SRL;
+if(funct == 42 ) Op<=SLT;
 end //endif
 
 

@@ -55,7 +55,7 @@ initial
 					DMemory[i]<=0;
 				end		
 			//	$display("%b",DMemory[1]);
-		//$readmemb("D:\\NEW\\yosys-win32-mxebin-0.7\\data.txt",DMemory);		
+		$readmemb("D:\\NEW\\yosys-win32-mxebin-0.7\\data.txt",DMemory);		
 	//$display("%b",DMemory[1]);
 end	
 always @(Address)

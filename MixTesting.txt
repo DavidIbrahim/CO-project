@@ -1,0 +1,9 @@
+10001101111100100000000000000001//lw *s2 0x1 t7			s2=Memory[16/4]=Memory[4]=4		we make sure that lw is followed by a stall as the next instruction uses the destination register s2
+00000010010000011000100000100000//add /s1 *s2 at		1 stall->s1=4+1=5			1 stall as add instruction waits for s2 value, we make sure add is followed by a stall as the beq waits for the result of s1
+00010010010100010000000000000001//beq s2 s1 label 		1 stall->s2=4,s1=5->won't branch	1 stall as beq instruction waits for s1 value
+00000010001000011000100000100010//sub s1 s1 at			s1=17-1=16				random instruction, executed as the beq doesn't go to label
+10001101100101010000000000000101//lw s5 0x5 t4			s5=Memory[17/4]=Memory[4]=4		lw in s5 that will be used in the following beq instruction, therefore lw is followed by 2 stalls
+00010000100101010000000000000010//label: beq a0 s5 label2	2 stalls->a0=4,s2=4->will branch	2 stalls as beq waits for value of s5, branches and goes to label 2
+00000010100001011010000000100101//or s4 s4 a1			won't be executed			random unexecuted instruction
+00000001001001101010100000100100//and s5 t1 a2			won't be executed			random unexecuted instruction
+00000010101000101010100000100010//label 2:sub s5 s5 v0		s5=4-2=2				executed after the beq instruction, s5 is not affected by the unexecuted and instruction

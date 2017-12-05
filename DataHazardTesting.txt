@@ -1,0 +1,6 @@
+//This test case checks for some forwarding mistakes that may happen due to data hazards
+10001101011100100000000000000001// lw s2 0x1 t3		s2=3		Address in t3=11->s2=Memory[(11+1)/4]=Memory[3]=3
+00000010010100111000100000100000// add s1 s2 s3		s1=3+19=22	s2=3,s3=19->Using s2 to make sure MEM/WB data hazard doesn't occur
+00000010001100011010000000100000// add s4 s1 s1		s4=22+22=44	Using s1 to make sure EX/MEM data hazard doesn't occur
+00000000000100011010000010000000// sll s4 s1 0x2	s4=22<<2=88	Filling s4 with another answer to make sure in the next instruction that the second s4 forwarding is used
+00000010100000001001100000100000// add s3 s4 zero	s3=88+0=88	The second forwarding of s4 is used

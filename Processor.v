@@ -172,7 +172,7 @@ InstMem  IMemory(PC,clk,instruction);//in the fetch stage
 
 //for stage 2
 
-controlUnit mainControlUnit(opCode,stallSignal,regDst,branch,memRead,memToReg,aluOP,memWrite,aluSrc,regWrite);//control unit//id stage and have effects in other stages
+controlUnit mainControlUnit(opCode,regDst,branch,memRead,memToReg,aluOP,memWrite,aluSrc,regWrite);//control unit//id stage and have effects in other stages
 
 Mux_5bits firstMux( MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID , MEM_WB_regDst , writeRegister);  // mux before registerFile // fetch stage 
 

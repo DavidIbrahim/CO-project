@@ -1,6 +1,6 @@
-module controlUnit(opCode,stallSignal,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,regWrite);	  
+module controlUnit(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,regWrite);	  
 	
-	input stallSignal;
+
 	input [5:0]opCode;
 	output reg regDst,branch,memRead,memToReg,memWrite,aluSrc,regWrite;	   
 	output reg [1:0]aluOp;	
@@ -98,7 +98,7 @@ module controlUnitTestBench;
 			clk=~clk;
 		end	 	
 		*/
-	controlUnit c1(opCode,stallSignal,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,regWrite);
+	controlUnit c1(opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,regWrite);
 	initial
 		begin 
 			$monitor($time ,,"opCode=%d regDst=%d branch=%d,memRead=%d,memToReg=%d,aluOp=%b,memWrite=%d,aluSrc=%d,regWrite=%d",opCode,regDst,branch,memRead,memToReg,aluOp,memWrite,aluSrc,regWrite);  

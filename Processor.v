@@ -177,7 +177,7 @@ controlUnit mainControlUnit(opCode,regDst,branch,memRead,memToReg,aluOP,memWrite
 Mux_5bits firstMux( MEM_WB_rt_IF_ID , MEM_WB_rd_IF_ID , MEM_WB_regDst , writeRegister);  // mux before registerFile // fetch stage 
 
 
-RegisterFile registerFile(rs,rt,        writeRegister,writeData, MEM_WB_regWrite ,                  clk, Ain,readData2,clk);// id stage
+RegisterFile registerFile(rs,rt,        writeRegister,writeData, MEM_WB_regWrite, Ain,readData2,clk);// id stage
 
 SignExtender signExtend(immediate_address ,extended_immediate);// before alu under the register file done //in the id stage	  
 

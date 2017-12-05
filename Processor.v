@@ -196,7 +196,7 @@ ForwardControl Branch_rt(EX_MEM_regWrite,MEM_WB_regWrite,IF_ID_rd,EX_MEM_rd,MEM_
 //Mux4To1_32bits branch_rt_Dst(readData2,MEM_WB_ALUOut,readData2,readData2,branchForwardSignalForRt,branch_rt);
 
 Mux4To1_32bits branch_rs_Dst(Ain,Ain,EX_MEM_ALUOut,writeData,branchForwardSignalForRs,branch_rs);	
-Mux4To1_32bits branch_rt_Dst(readData2,readData2,EX_MEM_ALUOut,readData2,branchForwardSignalForRt,branch_rt);
+Mux4To1_32bits branch_rt_Dst(readData2,readData2,EX_MEM_ALUOut,writeData,branchForwardSignalForRt,branch_rt);
 
 
 StallControlBranch stallforbranch(ID_EX_memRead,instruction[31:26],opCode,ID_EX_Opcode,ID_EX_rt,instruction[25:21],instruction[20:16],IF_ID_rd,ID_EX_rd,stallSignalForBranch);
